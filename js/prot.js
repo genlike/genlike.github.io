@@ -11,8 +11,7 @@ var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
 
 const acceleration = 4;
 const speedCap = 50;
-const angacceleration = 2*Math.PI;
-const rotationCap = 4*Math.PI;
+
 
 function createScene() {
     'use strict';
@@ -29,7 +28,7 @@ function createChair(x,y,z,legDistance) {
     'use strict';
 
     chair = new THREE.Object3D();
-    chair.userData = { xSpeed: 0, rotSpeed: 0 };
+    chair.userData = { xSpeed: 0, zSpeed: 0 };
     material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe:true});
 
     // Bottom Section
@@ -131,7 +130,6 @@ function onResize() {
 }
 
 function onKeyUp(e) {
-    console.log("UP " + e.keyCode);
     switch (e.keyCode) {
         case 38:
             buttonUP = false;
@@ -151,7 +149,6 @@ function onKeyUp(e) {
 function onKeyDown(e) {
     'use strict';
     
-    console.log("DOWN " + e.keyCode);
 /*
 Arrow Type  Alt Code
 UP          38
@@ -208,7 +205,6 @@ function init() {
     });
 
     clock = new THREE.Clock();
-
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
@@ -222,26 +218,23 @@ function init() {
 
 function animate() {
     'use strict';
+    
+    let delta = clock.getDelta();
+    if (buttonUP && chair.userData.xSpeed > -speedCap)
+        chair.userData.xSpeed -= acceleration ;
 
+    if (buttonDOWN && chair.userData.xSpeed < speedCap)
+        chair.userData.xSpeed += acceleration ;
 
+    if (buttonRIGHT && chair.userData.zSpeed > -speedCap)
+        chair.userData.zSpeed -= acceleration ;
 
+    if (buttonLEFT && chair.userData.zSpeed < speedCap)
+        chair.userData.zSpeed += acceleration ;
+    
+    
+    chair.position.add(new THREE.Vector3(chair.userData.xSpeed * delta, 0, chair.userData.zSpeed *delta ));
 
-    if (buttonUP && chair.userData.xSpeed < speedCap)
-        chair.userData.xSpeed += acceleration;
-
-    if (buttonDOWN && chair.userData.xSpeed > -speedCap)
-        chair.userData.xSpeed -= acceleration;
-
-    if (buttonRIGHT && chair.userData.rotSpeed < rotationCap)
-        chair.userData.rotSpeed += angacceleration;
-
-    if (buttonLEFT && chair.userData.rotSpeed > -rotationCap)
-        chair.userData.rotSpeed -= angacceleration;
-
-
-
-
-    chair.position.x += chair.userData.xSpeed * clock.getDelta();
     // X axis movement
     if (Math.abs(chair.userData.xSpeed) > 0) {
         if (chair.userData.xSpeed < 0) {
@@ -249,27 +242,20 @@ function animate() {
         } else { 
             chair.userData.xSpeed -= acceleration/4; 
         }
-        console.log(chair.userData.xSpeed + " - " + (acceleration/4) );
         if (Math.abs(chair.userData.xSpeed) <= acceleration/4)
             chair.userData.xSpeed = 0;
     }
-
-    /*
-    // Y axis rotation
-    let temp = 2*Math.PI * clock.getDelta();
-    chair.rotateY(chair.userData.rotSpeed*temp);
-    if (Math.abs(chair.userData.rotSpeed) > 0) {
-        if (chair.userData.rotSpeed < 0) {
-            chair.userData.rotSpeed += angacceleration / 4;
+    if (Math.abs(chair.userData.zSpeed) > 0) {
+        if (chair.userData.zSpeed < 0) {
+            chair.userData.zSpeed += acceleration / 4;
         } else {
-            chair.userData.rotSpeed -= angacceleration / 4;
+            chair.userData.zSpeed -= acceleration / 4;
         }
-        console.log(chair.userData.rotSpeed + " - " + (angacceleration / 4));
-        if (Math.abs(chair.userData.rotSpeed) <= angacceleration / 4)
-            chair.userData.rotSpeed = 0;
+        if (Math.abs(chair.userData.zSpeed) <= acceleration / 4)
+            chair.userData.zSpeed = 0;
     }
-    */
     render();
-
     requestAnimationFrame(animate);
+
+
 }
