@@ -151,6 +151,9 @@ function addTableSupports(obj,x,y,z) {
 	obj.add(sup3);
 	obj.add(sup4);
 
+	//Ok guys, desculpem os nomes cancerosos, se alguém souber fazer isto de forma mais elegante 
+	//diga algo please! ^-^
+
 }
 
 function createCamera() {
@@ -222,14 +225,15 @@ LEFT        37
     case 97: //a
         scene.traverse(function (node) {
             if (node instanceof THREE.Mesh) {
-                node.material.wireframe = !node.material.wireframe;
+                node.material.wireframe = !node.material.wireframe; // Alguem sabe porque e que
+                //isto nao funciona para os suportes? Tem a ver com o facto de serem clones?
             }
         });
         break;
     case 83:  //S
-    case 115: //s
-        ball.userData.jumping = !ball.userData.jumping;
-        break;
+    //case 115: //s
+        //ball.userData.jumping = !ball.userData.jumping;
+        //break;
     case 69:  //E
     case 101: //e
         scene.traverse(function (node) {
