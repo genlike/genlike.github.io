@@ -1,6 +1,6 @@
 /*global THREE, requestAnimationFrame, console*/
 
-var camera, scene, renderer;
+var camera, scene, renderer, clock;
 
 var geometry, material, mesh;
 
@@ -8,10 +8,11 @@ var chair;
 
 var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
 
-const acceleration = 0.1;
-const speedCap = 2;
-const angacceleration = 2*Math.PI*0.01;
-const rotationCap = 2*Math.PI*0.1;
+
+const acceleration = 4;
+const speedCap = 50;
+const angacceleration = 2*Math.PI;
+const rotationCap = 4*Math.PI;
 
 function createScene() {
     'use strict';
@@ -32,7 +33,7 @@ function createChair(x,y,z,legDistance) {
     material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe:true});
 
     // Bottom Section
-    let n=2;
+    let n=3;
     //Initial position of first wheel
     let rotation = 3*Math.PI / 2;
     for(let i=0;i<n;i++){
@@ -130,6 +131,7 @@ function onResize() {
 }
 
 function onKeyUp(e) {
+    console.log("UP " + e.keyCode);
     switch (e.keyCode) {
         case 38:
             buttonUP = false;
@@ -204,6 +206,9 @@ function init() {
     renderer = new THREE.WebGLRenderer({
         antialias: true
     });
+
+    clock = new THREE.Clock();
+
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
@@ -236,11 +241,11 @@ function animate() {
 
 
 
-    chair.position.x += chair.userData.xSpeed;
+    chair.position.x += chair.userData.xSpeed * clock.getDelta();
     // X axis movement
     if (Math.abs(chair.userData.xSpeed) > 0) {
         if (chair.userData.xSpeed < 0) {
-            chair.userData.xSpeed += acceleration/4 ; 
+            chair.userData.xSpeed += acceleration/4; 
         } else { 
             chair.userData.xSpeed -= acceleration/4; 
         }
@@ -248,8 +253,11 @@ function animate() {
         if (Math.abs(chair.userData.xSpeed) <= acceleration/4)
             chair.userData.xSpeed = 0;
     }
+
+    /*
     // Y axis rotation
-    chair.rotateY(chair.userData.rotSpeed);
+    let temp = 2*Math.PI * clock.getDelta();
+    chair.rotateY(chair.userData.rotSpeed*temp);
     if (Math.abs(chair.userData.rotSpeed) > 0) {
         if (chair.userData.rotSpeed < 0) {
             chair.userData.rotSpeed += angacceleration / 4;
@@ -260,7 +268,7 @@ function animate() {
         if (Math.abs(chair.userData.rotSpeed) <= angacceleration / 4)
             chair.userData.rotSpeed = 0;
     }
-
+    */
     render();
 
     requestAnimationFrame(animate);
