@@ -8,9 +8,13 @@ var chair;
 
 var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
 
+var rotmatrix, angle;
+
 
 const acceleration = 4;
 const speedCap = 50;
+const angularAcceleration = 2*Math.PI*0.01;
+const angularSpeedCap = 2 * Math.PI * 4;
 
 
 function createScene() {
@@ -28,7 +32,7 @@ function createChair(x,y,z,legDistance) {
     'use strict';
 
     chair = new THREE.Object3D();
-    chair.userData = { xSpeed: 0, zSpeed: 0 };
+    chair.userData = { xSpeed: 0, zSpeed: 0, direction: 0, rotationSpeed: 0};
     material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe:true});
 
     // Bottom Section
@@ -226,36 +230,74 @@ function animate() {
     if (buttonDOWN && chair.userData.xSpeed < speedCap)
         chair.userData.xSpeed += acceleration ;
 
-    if (buttonRIGHT && chair.userData.zSpeed > -speedCap)
-        chair.userData.zSpeed -= acceleration ;
-
-    if (buttonLEFT && chair.userData.zSpeed < speedCap)
-        chair.userData.zSpeed += acceleration ;
-    
-    
-    chair.position.add(new THREE.Vector3(chair.userData.xSpeed * delta, 0, chair.userData.zSpeed *delta ));
-
-    // X axis movement
-    if (Math.abs(chair.userData.xSpeed) > 0) {
-        if (chair.userData.xSpeed < 0) {
-            chair.userData.xSpeed += acceleration/4; 
-        } else { 
-            chair.userData.xSpeed -= acceleration/4; 
+    if (buttonRIGHT && chair.userData.zSpeed > -angularSpeedCap/*-speedCap*/){
+            chair.userData.rotationSpeed -= angularAcceleration;
         }
-        if (Math.abs(chair.userData.xSpeed) <= acceleration/4)
+        //chair.userData.zSpeed -= acceleration ;
+
+    if (buttonLEFT && chair.userData.zSpeed < angularSpeedCap/*speedCap*/){
+        chair.userData.rotationSpeed += angularAcceleration;
+    }
+        //chair.userData.zSpeed += acceleration ;
+    
+    
+        if (Math.abs(chair.userData.xSpeed) > 0) {
+            if (chair.userData.xSpeed < 0) {
+                chair.userData.xSpeed += acceleration/4; 
+            } else { 
+                chair.userData.xSpeed -= acceleration/4; 
+            }
+            if (Math.abs(chair.userData.xSpeed) <= acceleration/4)
             chair.userData.xSpeed = 0;
-    }
-    if (Math.abs(chair.userData.zSpeed) > 0) {
-        if (chair.userData.zSpeed < 0) {
-            chair.userData.zSpeed += acceleration / 4;
-        } else {
-            chair.userData.zSpeed -= acceleration / 4;
         }
-        if (Math.abs(chair.userData.zSpeed) <= acceleration / 4)
+        /*  
+        if (Math.abs(chair.userData.zSpeed) > 0) {
+            if (chair.userData.zSpeed < 0) {
+                chair.userData.zSpeed += acceleration / 4;
+            } else {
+                chair.userData.zSpeed -= acceleration / 4;
+            }
+            if (Math.abs(chair.userData.zSpeed) <= acceleration / 4)
             chair.userData.zSpeed = 0;
+        }
+        */
+       
+       
+       if (Math.abs(chair.userData.rotationSpeed) > 0) {
+           if (chair.userData.rotationSpeed < 0) {
+               chair.userData.rotationSpeed += angularAcceleration / 4;
+            } else {
+                chair.userData.rotationSpeed -= angularAcceleration / 4;
+            }
+            if (Math.abs(chair.userData.rotationSpeed) <= angularAcceleration / 4)
+            chair.userData.rotationSpeed = 0;
+        }
+        
+        chair.rotateY(chair.userData.rotationSpeed*delta);
+
+        //let matrix4 = (THREE.Matrix4) chair.position.matrix; 
+        rotmatrix = new THREE.Vector3();
+        chair.matrix.extractBasis(rotmatrix, new THREE.Vector3(), new THREE.Vector3());    
+        
+        let xAxis = new THREE.Vector3(1, 0, 0);
+        //angle.applyMatrix4(rotmatrix);
+        
+        //console.log(rotmatrix.toArray() + " | " + xAxis.toArray() + " | " + rotmatrix.dot(xAxis));
+        if (rotmatrix.z>0)
+            angle = rotmatrix.angleTo(xAxis);
+        else
+            angle = 2 * Math.PI - rotmatrix.angleTo(xAxis);
+
+        //console.log(angle);
+
+
+        chair.position.add(new THREE.Vector3((chair.userData.xSpeed * Math.cos(angle)) * delta, 0, (chair.userData.xSpeed * Math.sin(angle)) *delta ));
+        
+        setTimeout(function () {
+            requestAnimationFrame(animate);
+        }, 1000 / 60);
+        render();
+        
+        
     }
-    render();
-    requestAnimationFrame(animate);
-
-
-}
+    
