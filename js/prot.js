@@ -25,7 +25,7 @@ function createScene() {
     scene.add(new THREE.AxisHelper(40));
 
     createChair(0,5,0,3);
-    createTable(8,10,18);
+    createTable(0,5,12);
 
 }
 
@@ -127,7 +127,7 @@ function addTableTop(obj,x,y,z) {
 	geometry = new THREE.CubeGeometry(15,1,10);
 	material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true});
 	mesh = new THREE.Mesh(geometry, material);
-	mesh.position.set(x,y,z);
+	mesh.position.set(x,y - 1,z);
 	obj.add(mesh);
 }
 
@@ -138,25 +138,23 @@ function addTableSupports(obj,x,y,z) {
 	geometry = new THREE.CubeGeometry(0.7,0.7,7);
 	material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
 	mesh = new THREE.Mesh(geometry, material);
-	mesh.position.set(x - 9,y,z - 6.4);
+	mesh.position.set(x - 7,y,z - 4.3);
 	mesh.rotateX(Math.PI / 2);
 
 	var sup2 = mesh.clone();
-	sup2.position.set(x + 5, y, z + 3.1);
+	sup2.position.set(x + 7.2, y, z + 4.6);
 
 	var sup3 = mesh.clone();
-	sup3.position.set(x + 5, y, z - 6.1);
+	sup3.position.set(x + 7, y, z - 4.6);
 
 	var sup4 = mesh.clone();
-	sup4.position.set(x - 9, y, z + 2.7);
+	sup4.position.set(x - 7, y, z + 4.6);
 
 	obj.add(mesh);
 	obj.add(sup2);
 	obj.add(sup3);
 	obj.add(sup4);
 
-	//Ok guys, desculpem os nomes cancerosos, se alguém souber fazer isto de forma mais elegante 
-	//diga algo please! ^-^
 
 }
 
