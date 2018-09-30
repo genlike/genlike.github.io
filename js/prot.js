@@ -116,7 +116,10 @@ function createTable(x,y,z) {
 	table = new THREE.Object3D();
 	material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
 	addTableTop(table,x,y,z);
-	addTableSupports(table, x, y - 5, z);
+	addTableSupports(table, x - 7, y - 5, z - 4.3); //pomos y-5 em todos
+	addTableSupports(table, x + 7, y - 5, z + 4.6);
+	addTableSupports(table, x + 7, y - 5, z - 4.6);
+	addTableSupports(table, x - 7, y - 5, z + 4.6);
 	scene.add(table);
 }
 
@@ -135,42 +138,30 @@ function addTableSupports(obj,x,y,z) {
 
 	'use scrict';
 
-	geometry = new THREE.CubeGeometry(0.7,0.7,7);
+	geometry = new THREE.CylinderGeometry(0.5,0.5,7);
 	material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
 	mesh = new THREE.Mesh(geometry, material);
-	mesh.position.set(x - 7,y,z - 4.3);
-	mesh.rotateX(Math.PI / 2);
-
-	var sup2 = mesh.clone();
-	sup2.position.set(x + 7.2, y, z + 4.6);
-
-	var sup3 = mesh.clone();
-	sup3.position.set(x + 7, y, z - 4.6);
-
-	var sup4 = mesh.clone();
-	sup4.position.set(x - 7, y, z + 4.6);
+	mesh.position.set(x,y,z);
+	//mesh.rotateX(Math.PI / 2);
 
 	obj.add(mesh);
-	obj.add(sup2);
-	obj.add(sup3);
-	obj.add(sup4);
-
 
 }
 
 function createCamera() {
     'use strict';
-    camera = new THREE.PerspectiveCamera(10,
-                                         window.innerWidth / window.innerHeight,
-                                         1,
-                                         1000);
-    camera.position.x = 200;
-    camera.position.y = 200;
+
+    camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras, 
+    //fiz isto so para testar
+
+    camera.position.x = 0;
+    camera.position.y = 1900;
     camera.position.z = 200;
     camera.lookAt(scene.position);
+
 }
 
-function onResize() {
+function onResize() { //Com a camara ortografica ja nao funciona o resize... gotta figure out why
     'use strict';
 
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -227,8 +218,8 @@ LEFT        37
     case 97: //a
         scene.traverse(function (node) {
             if (node instanceof THREE.Mesh) {
-                node.material.wireframe = !node.material.wireframe; // Alguem sabe porque e que
-                //isto nao funciona para os suportes? Tem a ver com o facto de serem clones?
+                node.material.wireframe = !node.material.wireframe; 
+
             }
         });
         break;
@@ -268,6 +259,7 @@ function init() {
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("resize", onResize);
+
 }
 
 function animate() {
