@@ -33,6 +33,12 @@ function createChair(x,y,z,legDistance) {
     'use strict';
 
     chair = new THREE.Object3D();
+	let chair_top = new THREE.Object3D();
+	chair_top.name = "chair_top";
+	let chair_bottom = new THREE.Object3D();
+	chair_bottom.name = "chair_bottom";
+	let chair_legs = new THREE.Group();
+	
     chair.userData = { xSpeed: 0, zSpeed: 0, direction: 0, rotationSpeed: 0};
     material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe:true});
 
@@ -40,24 +46,30 @@ function createChair(x,y,z,legDistance) {
     let n=3;
     //Initial position of first wheel
     let rotation = 3*Math.PI / 2;
+	let chair_leg = new THREE.Group();
     for(let i=0;i<n;i++){
         rotation += (2*Math.PI)/n
         // Position and rotation around Y axis
-        addChairWheel(chair, x + legDistance * Math.cos(rotation), y - 8, z - legDistance * Math.sin(rotation), rotation);
+        addChairWheel(chair_leg, x + legDistance * Math.cos(rotation), y - 8, z - legDistance * Math.sin(rotation), rotation);
         // Position, rotation around Y axis and leg length
-        addChairWheelSupport(chair, x + (legDistance / 2) * Math.cos(rotation), y - 7.7, z - (legDistance / 2) * Math.sin(rotation), rotation, legDistance);
+        addChairWheelSupport(chair_leg, x + (legDistance / 2) * Math.cos(rotation), y - 7.7, z - (legDistance / 2) * Math.sin(rotation), rotation, legDistance);
+		chair_legs.add(chair_leg);
+		chair_leg = new THREE.Group();
     }
 
     //Center Section
-    addChairCenterPiece(chair,x,y,z);
+	chair_bottom.add(chair_legs);
+    addChairCenterPiece(chair_bottom,x,y,z);
 
 
     //ChairSection
-    addChairSeat(chair,x,y,z);
-    addChairBack(chair,x,y,z);
+    addChairSeat(chair_top,x,y,z);
+    addChairBack(chair_top,x,y,z);
 
 
     //Adding to the scene
+	chair.add(chair_top);
+	chair.add(chair_bottom);
     scene.add(chair);
 
 }
@@ -71,10 +83,10 @@ function addChairSeat(obj,x,y,z){
 }
 
 function addChairBack(obj, x, y, z) {
-    geometry = new THREE.CubeGeometry(1, 5, 5);
+    geometry = new THREE.CubeGeometry(5, 5, 1);
     material = new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true });
     mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x-3, y, z);
+    mesh.position.set(x, y, z-3);
     obj.add(mesh);
 }
 
@@ -151,11 +163,15 @@ function addTableSupports(obj,x,y,z) {
 function createCamera() {
     'use strict';
 
-    camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras, 
+    //camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras, 
     //fiz isto so para testar
-
-    camera.position.x = 0;
-    camera.position.y = 1900;
+	 camera = new THREE.PerspectiveCamera(10,
+                                         window.innerWidth / window.innerHeight,
+                                         1,
+                                         1000);
+										 
+    camera.position.x = 200;
+    camera.position.y = 200;
     camera.position.z = 200;
     camera.lookAt(scene.position);
 
@@ -262,6 +278,21 @@ function init() {
 
 }
 
+function rotateWheels(chair, direction){
+	chair.getObjectByName("chair_bottom").children[0].children.forEach( leg => {
+		let wheel = leg.children[0]; //Object3D
+		console.log(wheel);
+		let wheelDirection = new THREE.Vector3();
+		wheel.getWorldDirection(wheelDirection);
+		let angle = wheelDirection.angleTo(direction);
+		//if (angle > Math.PI/2)
+		//wheel.rotateY(2*Math.PI - angle);
+		wheel.rotateY(angle+Math.PI/2);
+	});
+}
+
+
+
 function animate() {
     'use strict';
     
@@ -315,25 +346,17 @@ function animate() {
             chair.userData.rotationSpeed = 0;
         }
         
-        chair.rotateY(chair.userData.rotationSpeed*delta);
+        let chair_top = chair.getObjectByName("chair_top");
+		chair_top.rotateY(chair.userData.rotationSpeed*delta);
 
         //let matrix4 = (THREE.Matrix4) chair.position.matrix; 
-        rotmatrix = new THREE.Vector3();
-        chair.matrix.extractBasis(rotmatrix, new THREE.Vector3(), new THREE.Vector3());    
+        let chairDirection = new THREE.Vector3();
+        chair_top.getWorldDirection(chairDirection);
         
-        let xAxis = new THREE.Vector3(1, 0, 0);
-        //angle.applyMatrix4(rotmatrix);
-        
-        //console.log(rotmatrix.toArray() + " | " + xAxis.toArray() + " | " + rotmatrix.dot(xAxis));
-        if (rotmatrix.z>0)
-            angle = rotmatrix.angleTo(xAxis);
-        else
-            angle = 2 * Math.PI - rotmatrix.angleTo(xAxis);
 
-        //console.log(angle);
-
-
-        chair.position.add(new THREE.Vector3((chair.userData.xSpeed * Math.cos(angle)) * delta, 0, (chair.userData.xSpeed * Math.sin(angle)) *delta ));
+        chair.position.add(new THREE.Vector3((chair.userData.xSpeed * chairDirection.x) * delta, 0, (chair.userData.xSpeed * chairDirection.z) *delta ));
+		if (Math.abs(chair.userData.xSpeed)>0.01)
+			rotateWheels(chair, chairDirection);
         
         setTimeout(function () {
             requestAnimationFrame(animate);
