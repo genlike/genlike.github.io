@@ -280,13 +280,12 @@ function init() {
 
 function rotateWheels(chair, direction){
 	chair.getObjectByName("chair_bottom").children[0].children.forEach( leg => {
-		let wheel = leg.children[0]; //Object3D
-		console.log(wheel);
+		let wheel = leg.children[0]; 
+
 		let wheelDirection = new THREE.Vector3();
 		wheel.getWorldDirection(wheelDirection);
 		let angle = wheelDirection.angleTo(direction);
-		//if (angle > Math.PI/2)
-		//wheel.rotateY(2*Math.PI - angle);
+
 		wheel.rotateY(angle+Math.PI/2);
 	});
 }
