@@ -4,7 +4,7 @@ var camera, scene, renderer, clock;
 
 var geometry, material, mesh;
 
-var chair,table;
+var chair,table, lamp;
 
 var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
 
@@ -15,6 +15,7 @@ const acceleration = 4;
 const speedCap = 50;
 const angularAcceleration = 2*Math.PI*0.01;
 const angularSpeedCap = 2 * Math.PI * 4;
+const frustumSize = 50;
 
 
 function createScene() {
@@ -26,6 +27,8 @@ function createScene() {
 
     createChair(0,5,0,3);
     createTable(0,5,12);
+    createLamp(13,-3.5,5);
+
 
 }
 
@@ -160,32 +163,122 @@ function addTableSupports(obj,x,y,z) {
 
 }
 
+function createLamp(x,y,z) {
+    'use scrict';
+
+    lamp = new THREE.Object3D();
+    material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
+    addLampBase(lamp,x,y ,z);
+    addLampPole(lamp,x, y + 5.266, z);
+    addLampSphere(lamp,x,y+10.5,z);
+    addLampCover(lamp,x,y+10.5,z);
+    scene.add(lamp);
+}
+
+
+
+function addLampBase(obj,x,y,z){
+    'use scrict';
+
+    geometry = new THREE.CubeGeometry(5,0.3,5);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x,y+ 0.150,z);
+    obj.add(mesh);
+
+    geometry = new THREE.CubeGeometry(2.5,0.25,2.5);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x,y + 0.350,z);
+    obj.add(mesh);
+}
+function addLampPole(obj,x,y,z) {
+    'use scrict';
+
+    geometry = new THREE.CylinderGeometry(0.3,0.3,10,21);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x,y,z);
+    obj.add(mesh);
+}
+
+function addLampSphere(obj,x,y,z) {
+    'use scrict';
+
+    geometry = new THREE.SphereGeometry(0.58,20,20);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x,y,z);
+    obj.add(mesh);
+}
+
+function addLampCover(obj,x,y,z) {
+    'use scrict';
+
+    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x,y,z+1.55);
+    obj.add(mesh);
+
+    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x,y,z-1.55);
+    obj.add(mesh);
+
+    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x+1.55,y,z);
+    mesh.rotateY(Math.PI / 2);
+    obj.add(mesh);
+
+    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x-1.55,y,z);
+    mesh.rotateY(Math.PI / 2);
+    obj.add(mesh);
+
+}
+
 function createCamera() {
     'use strict';
 
-    //camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras, 
-    //fiz isto so para testar
-	 camera = new THREE.PerspectiveCamera(10,
-                                         window.innerWidth / window.innerHeight,
-                                         1,
-                                         1000);
+
+    var aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
+
+    // camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras,
+
 										 
-    camera.position.x = 200;
-    camera.position.y = 200;
-    camera.position.z = 200;
+    camera.position.x = 100 ;
+    camera.position.y = 100 ;
+    camera.position.z = 100 ;
+
     camera.lookAt(scene.position);
 
 }
 
-function onResize() { //Com a camara ortografica ja nao funciona o resize... gotta figure out why
+function onResize() {
     'use strict';
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    var aspect = window.innerWidth / window.innerHeight;
+    camera.left   = - frustumSize * aspect / 2;
+    camera.right  =   frustumSize * aspect / 2;
+    camera.top    =   frustumSize / 2;
+    camera.bottom = - frustumSize / 2;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
 
-    if (window.innerHeight > 0 && window.innerWidth > 0) {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-    }
+
+    // renderer.setSize(window.innerWidth, window.innerHeight);
+    //
+    // if (window.innerHeight > 0 && window.innerWidth > 0) {
+    //     camera.aspect = window.innerWidth / window.innerHeight;
+    //     camera.updateProjectionMatrix();
+    // }
 
 }
 
@@ -215,6 +308,10 @@ UP          38
 RIGHT       39
 DOWN        40
 LEFT        37
+1           49
+2           50
+3           51
+4           52
 */
 
     switch (e.keyCode) {
@@ -250,6 +347,31 @@ LEFT        37
                 node.visible = !node.visible;
             }
         });
+        break;
+
+    case  49: // 1
+        camera.position.x = 100 ;
+        camera.position.y = 0;
+        camera.position.z = 0;
+        camera.lookAt(scene.position);
+        break;
+    case  50: // 2
+        camera.position.x = 0;
+        camera.position.y = 100 ;
+        camera.position.z = 0;
+        camera.lookAt(scene.position);
+        break;
+    case  51: // 3
+        camera.position.x = 0;
+        camera.position.y = 0;
+        camera.position.z = 100 ;
+        camera.lookAt(scene.position);
+        break;
+    case  52: // 4
+        camera.position.x = 100 ;
+        camera.position.y = 100 ;
+        camera.position.z = 100;
+        camera.lookAt(scene.position);
         break;
     }
 }
