@@ -53,7 +53,8 @@ function createChair(x,y,z,legDistance) {
     for(let i=0;i<n;i++){
         rotation += (2*Math.PI)/n
         // Position and rotation around Y axis
-        addChairWheel(chair_leg, x + legDistance * Math.cos(rotation), y - 8, z - legDistance * Math.sin(rotation), rotation);
+        addChairWheel(chair_leg, x + legDistance * Math.cos(rotation), y - 8, z - legDistance * Math.sin(rotation), Math.PI/2);
+		
         // Position, rotation around Y axis and leg length
         addChairWheelSupport(chair_leg, x + (legDistance / 2) * Math.cos(rotation), y - 7.7, z - (legDistance / 2) * Math.sin(rotation), rotation, legDistance);
 		chair_legs.add(chair_leg);
@@ -62,12 +63,12 @@ function createChair(x,y,z,legDistance) {
 
     //Center Section
 	chair_bottom.add(chair_legs);
-    addChairCenterPiece(chair_bottom,x,y,z);
+    addChairCenterPiece(chair_bottom,x,y-1,z);
 
 
     //ChairSection
-    addChairSeat(chair_top,x,y,z);
-    addChairBack(chair_top,x,y,z);
+    addChairSeat(chair_top,x,y-2,z);
+    addChairBack(chair_top,x,y-2,z);
 
 
     //Adding to the scene
@@ -95,7 +96,7 @@ function addChairBack(obj, x, y, z) {
 
 
 function addChairCenterPiece(obj, x,y,z){
-    geometry = new THREE.CubeGeometry(1, 5, 1);
+    geometry = new THREE.CubeGeometry(1, 3, 1);
     material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y-5, z);
@@ -110,6 +111,7 @@ function addChairWheel(obj,x,y,z,rad){
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x,y,z);
     mesh.rotateY(rad);
+	mesh.add(new THREE.AxisHelper(5));
     obj.add(mesh);
 }
 
@@ -418,10 +420,10 @@ function animate() {
     'use strict';
     
     let delta = clock.getDelta();
-    if (buttonUP && chair.userData.xSpeed > -speedCap)
+    if (buttonDOWN && chair.userData.xSpeed > -speedCap)
         chair.userData.xSpeed -= acceleration ;
 
-    if (buttonDOWN && chair.userData.xSpeed < speedCap)
+    if (buttonUP && chair.userData.xSpeed < speedCap)
         chair.userData.xSpeed += acceleration ;
 
     if (buttonRIGHT && chair.userData.zSpeed > -angularSpeedCap/*-speedCap*/){
