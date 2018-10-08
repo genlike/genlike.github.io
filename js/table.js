@@ -12,7 +12,7 @@ class Table extends GraphicalObject {
 		this.addTableSupports(this, x - 7, y - 5, z + 4.6);
 	}
 
-	function addTableTop(obj,x,y,z) {	
+	addTableTop(obj,x,y,z) {	
 		'use scrict';
 
 		geometry = new THREE.CubeGeometry(15,1,10);
@@ -22,9 +22,9 @@ class Table extends GraphicalObject {
 		this.add(mesh);
 	}
 
-	function addTableSupports(obj,x,y,z) {
+	addTableSupports(obj,x,y,z) {
 		'use scrict';
-		
+
 		geometry = new THREE.CylinderGeometry(0.5,0.5,7);
 		material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
 		mesh = new THREE.Mesh(geometry, material);
