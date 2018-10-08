@@ -27,8 +27,10 @@ function createScene() {
 
     createChair(0,5,0,3);
     createTable(0,5,12);
-    createLamp(13,-3.5,5);
 
+    //createLamp(13,-3.5,5);
+
+    scene.add(new Lamp(13,-3.5,5));
 
 }
 
@@ -41,7 +43,7 @@ function createChair(x,y,z,legDistance) {
 	let chair_bottom = new THREE.Object3D();
 	chair_bottom.name = "chair_bottom";
 	let chair_legs = new THREE.Group();
-	
+
     chair.userData = { xSpeed: 0, zSpeed: 0, direction: 0, rotationSpeed: 0};
     material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe:true});
 
@@ -54,7 +56,7 @@ function createChair(x,y,z,legDistance) {
         rotation += (2*Math.PI)/n
         // Position and rotation around Y axis
         addChairWheel(chair_leg, x + legDistance * Math.cos(rotation), y - 8, z - legDistance * Math.sin(rotation), Math.PI/2);
-		
+
         // Position, rotation around Y axis and leg length
         addChairWheelSupport(chair_leg, x + (legDistance / 2) * Math.cos(rotation), y - 7.7, z - (legDistance / 2) * Math.sin(rotation), rotation, legDistance);
 		chair_legs.add(chair_leg);
@@ -124,7 +126,7 @@ function addChairWheelSupport(obj, x, y, z, rad, length) {
     mesh.position.set(x, y, z);
     mesh.rotateY(rad);
     obj.add(mesh);
-} 
+}
 
 function createTable(x,y,z) {
 
@@ -165,85 +167,85 @@ function addTableSupports(obj,x,y,z) {
 
 }
 
-function createLamp(x,y,z) {
-    'use scrict';
+// function createLamp(x,y,z) {
+//     'use scrict';
+//
+//     lamp = new THREE.Object3D();
+//     material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
+//     addLampBase(lamp,x,y ,z);
+//     addLampPole(lamp,x, y + 5.266, z);
+//     addLampSphere(lamp,x,y+10.5,z);
+//     addLampCover(lamp,x,y+10.5,z);
+//     scene.add(lamp);
+// }
 
-    lamp = new THREE.Object3D();
-    material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
-    addLampBase(lamp,x,y ,z);
-    addLampPole(lamp,x, y + 5.266, z);
-    addLampSphere(lamp,x,y+10.5,z);
-    addLampCover(lamp,x,y+10.5,z);
-    scene.add(lamp);
-}
 
-
-
-function addLampBase(obj,x,y,z){
-    'use scrict';
-
-    geometry = new THREE.CubeGeometry(5,0.3,5);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x,y+ 0.150,z);
-    obj.add(mesh);
-
-    geometry = new THREE.CubeGeometry(2.5,0.25,2.5);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x,y + 0.350,z);
-    obj.add(mesh);
-}
-function addLampPole(obj,x,y,z) {
-    'use scrict';
-
-    geometry = new THREE.CylinderGeometry(0.3,0.3,10,21);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x,y,z);
-    obj.add(mesh);
-}
-
-function addLampSphere(obj,x,y,z) {
-    'use scrict';
-
-    geometry = new THREE.SphereGeometry(0.58,20,20);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x,y,z);
-    obj.add(mesh);
-}
-
-function addLampCover(obj,x,y,z) {
-    'use scrict';
-
-    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x,y,z+1.55);
-    obj.add(mesh);
-
-    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x,y,z-1.55);
-    obj.add(mesh);
-
-    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x+1.55,y,z);
-    mesh.rotateY(Math.PI / 2);
-    obj.add(mesh);
-
-    geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
-    material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x-1.55,y,z);
-    mesh.rotateY(Math.PI / 2);
-    obj.add(mesh);
-
-}
+//
+// function addLampBase(obj,x,y,z){
+//     'use scrict';
+//
+//     geometry = new THREE.CubeGeometry(5,0.3,5);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x,y+ 0.150,z);
+//     obj.add(mesh);
+//
+//     geometry = new THREE.CubeGeometry(2.5,0.25,2.5);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x,y + 0.350,z);
+//     obj.add(mesh);
+// }
+// function addLampPole(obj,x,y,z) {
+//     'use scrict';
+//
+//     geometry = new THREE.CylinderGeometry(0.3,0.3,10,21);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x,y,z);
+//     obj.add(mesh);
+// }
+//
+// function addLampSphere(obj,x,y,z) {
+//     'use scrict';
+//
+//     geometry = new THREE.SphereGeometry(0.58,20,20);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x,y,z);
+//     obj.add(mesh);
+// }
+//
+// function addLampCover(obj,x,y,z) {
+//     'use scrict';
+//
+//     geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x,y,z+1.55);
+//     obj.add(mesh);
+//
+//     geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x,y,z-1.55);
+//     obj.add(mesh);
+//
+//     geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x+1.55,y,z);
+//     mesh.rotateY(Math.PI / 2);
+//     obj.add(mesh);
+//
+//     geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+//     material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+//     mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(x-1.55,y,z);
+//     mesh.rotateY(Math.PI / 2);
+//     obj.add(mesh);
+//
+// }
 
 function createCamera() {
     'use strict';
@@ -254,7 +256,7 @@ function createCamera() {
 
     // camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras,
 
-										 
+
     camera.position.x = 100 ;
     camera.position.y = 100 ;
     camera.position.z = 100 ;
@@ -303,7 +305,7 @@ function onKeyUp(e) {
 
 function onKeyDown(e) {
     'use strict';
-    
+
 /*
 Arrow Type  Alt Code
 UP          38
@@ -333,7 +335,7 @@ LEFT        37
     case 97: //a
         scene.traverse(function (node) {
             if (node instanceof THREE.Mesh) {
-                node.material.wireframe = !node.material.wireframe; 
+                node.material.wireframe = !node.material.wireframe;
 
             }
         });
@@ -404,7 +406,7 @@ function init() {
 
 function rotateWheels(chair, direction){
 	chair.getObjectByName("chair_bottom").children[0].children.forEach( leg => {
-		let wheel = leg.children[0]; 
+		let wheel = leg.children[0];
 
 		let wheelDirection = new THREE.Vector3();
 		wheel.getWorldDirection(wheelDirection);
@@ -418,7 +420,7 @@ function rotateWheels(chair, direction){
 
 function animate() {
     'use strict';
-    
+
     let delta = clock.getDelta();
     if (buttonDOWN && chair.userData.xSpeed > -speedCap)
         chair.userData.xSpeed -= acceleration ;
@@ -435,18 +437,18 @@ function animate() {
         chair.userData.rotationSpeed += angularAcceleration;
     }
         //chair.userData.zSpeed += acceleration ;
-    
-    
+
+
         if (Math.abs(chair.userData.xSpeed) > 0) {
             if (chair.userData.xSpeed < 0) {
-                chair.userData.xSpeed += acceleration/4; 
-            } else { 
-                chair.userData.xSpeed -= acceleration/4; 
+                chair.userData.xSpeed += acceleration/4;
+            } else {
+                chair.userData.xSpeed -= acceleration/4;
             }
             if (Math.abs(chair.userData.xSpeed) <= acceleration/4)
             chair.userData.xSpeed = 0;
         }
-        /*  
+        /*
         if (Math.abs(chair.userData.zSpeed) > 0) {
             if (chair.userData.zSpeed < 0) {
                 chair.userData.zSpeed += acceleration / 4;
@@ -457,8 +459,8 @@ function animate() {
             chair.userData.zSpeed = 0;
         }
         */
-       
-       
+
+
        if (Math.abs(chair.userData.rotationSpeed) > 0) {
            if (chair.userData.rotationSpeed < 0) {
                chair.userData.rotationSpeed += angularAcceleration / 4;
@@ -468,24 +470,23 @@ function animate() {
             if (Math.abs(chair.userData.rotationSpeed) <= angularAcceleration / 4)
             chair.userData.rotationSpeed = 0;
         }
-        
+
         let chair_top = chair.getObjectByName("chair_top");
 		chair_top.rotateY(chair.userData.rotationSpeed*delta);
 
-        //let matrix4 = (THREE.Matrix4) chair.position.matrix; 
+        //let matrix4 = (THREE.Matrix4) chair.position.matrix;
         let chairDirection = new THREE.Vector3();
         chair_top.getWorldDirection(chairDirection);
-        
+
 
         chair.position.add(new THREE.Vector3((chair.userData.xSpeed * chairDirection.x) * delta, 0, (chair.userData.xSpeed * chairDirection.z) *delta ));
 		if (Math.abs(chair.userData.xSpeed)>0.01)
 			rotateWheels(chair, chairDirection);
-        
+
         setTimeout(function () {
             requestAnimationFrame(animate);
         }, 1000 / 60);
         render();
-        
-        
+
+
     }
-    

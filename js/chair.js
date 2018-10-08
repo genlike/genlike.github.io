@@ -18,7 +18,7 @@ function createChair(x,y,z,legDistance) {
 	let chair_bottom = new THREE.Object3D();
 	chair_bottom.name = "chair_bottom";
 	let chair_legs = new THREE.Group();
-	
+
     chair.userData = { xSpeed: 0, zSpeed: 0, direction: 0, rotationSpeed: 0};
     material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe:true});
 
@@ -31,7 +31,7 @@ function createChair(x,y,z,legDistance) {
         rotation += (2*Math.PI)/n
         // Position and rotation around Y axis
         addChairWheel(chair_leg, x + legDistance * Math.cos(rotation), y - 8, z - legDistance * Math.sin(rotation), Math.PI/2);
-		
+
         // Position, rotation around Y axis and leg length
         addChairWheelSupport(chair_leg, x + (legDistance / 2) * Math.cos(rotation), y - 7.7, z - (legDistance / 2) * Math.sin(rotation), rotation, legDistance);
 		chair_legs.add(chair_leg);
@@ -101,4 +101,4 @@ function addChairWheelSupport(obj, x, y, z, rad, length) {
     mesh.position.set(x, y, z);
     mesh.rotateY(rad);
     obj.add(mesh);
-} 
+}
