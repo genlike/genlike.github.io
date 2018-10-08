@@ -1,5 +1,11 @@
+const acceleration = 4;
+const speedCap = 50;
+const angularAcceleration = 2*Math.PI*0.01;
+const angularSpeedCap = 2 * Math.PI * 4;
+const torusRadius = 0.3;
 
 class Chair extends GraphicalObject {
+
     constructor(x,y,z,numberLegs=3,wheelCenterDistance=3.4, color=0x00ff00){
         super();
         this.chair_top = new GraphicalObject();
@@ -68,7 +74,7 @@ class Chair extends GraphicalObject {
     addChairWheel(obj,x,y,z,rad){
         'use strict';
     
-        geometry = new THREE.TorusGeometry(0.3, 0.2, 16, 100);
+        geometry = new THREE.TorusGeometry(torusRadius, 0.2, 16, 100);
         material = new THREE.MeshBasicMaterial({ color: 0xffff00 , wireframe: true});
         mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z);
@@ -86,7 +92,60 @@ class Chair extends GraphicalObject {
         mesh.position.set(x, y, z);
         mesh.rotateY(rad);
         obj.add(mesh);
-    } 
+    }
+    rotateChair(delta, Right=true){
+        if (Right && this.userData.zSpeed > -angularSpeedCap){
+            this.userData.rotationSpeed -= angularAcceleration;
+        }
+        
+        if (!Right && this.userData.zSpeed < angularSpeedCap){
+            this.userData.rotationSpeed += angularAcceleration;
+        }
+        /* atrito */
+        if (Math.abs(this.userData.rotationSpeed) > 0) {
+           if (this.userData.rotationSpeed < 0) {
+               this.userData.rotationSpeed += angularAcceleration / 3;
+            } else {
+                this.userData.rotationSpeed -= angularAcceleration / 3;
+            }
+        }
+        this.chair_top.rotateY(this.userData.rotationSpeed*delta);
+    }
+
+    rotateWheels(chair, direction){
+        this.chair_wheels.children.forEach( wheel => {
+    
+            let wheelDirection = new THREE.Vector3();
+            wheel.getWorldDirection(wheelDirection);
+            let angle = wheelDirection.angleTo(direction);
+    
+            wheel.rotation.y += (angle+Math.PI/2);
+            wheel.rotation.z += this.userData/torusRadius;
+        });
+    }
+    moveChair(delta, Forward=true){
+
+        if (Forward && this.userData.Speed > -speedCap)
+            this.userData.Speed -= acceleration
+        if (!Forward && this.userData.Speed < speedCap)
+            this.userData.Speed += acceleration
+            
+        /* atrito */ 
+        if (Math.abs(this.userData.Speed) > 0) {
+            if (this.userData.Speed < 0) {
+                this.userData.Speed += acceleration/4; 
+            } else { 
+                this.userData.Speed -= acceleration/4; 
+            }
+        }
+
+        let chairDirection = new THREE.Vector3();
+        this.chair_top.getWorldDirection(chairDirection);
+
+        this.position.add(new THREE.Vector3((this.userData.Speed * chairDirection.x) * delta, 0, (this.userData.Speed * chairDirection.z) *delta ));
+		if (Math.abs(chair.userData.Speed)>0.01)
+			rotateWheels(chair, chairDirection);
+    }
 }
 
 
