@@ -5,12 +5,11 @@ class Table extends GraphicalObject {
 
 		material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
 
-		addTableTop(this,x,y,z);
-		addTableSupports(this, x - 7, y - 5, z - 4.3); 
-		addTableSupports(this, x + 7, y - 5, z + 4.6);
-		addTableSupports(this, x + 7, y - 5, z - 4.6);
-		addTableSupports(this, x - 7, y - 5, z + 4.6);
-
+		this.addTableTop(this,x,y,z);
+		this.addTableSupports(this, x - 7, y - 5, z - 4.3); 
+		this.addTableSupports(this, x + 7, y - 5, z + 4.6);
+		this.addTableSupports(this, x + 7, y - 5, z - 4.6);
+		this.addTableSupports(this, x - 7, y - 5, z + 4.6);
 	}
 
 	function addTableTop(obj,x,y,z) {	
@@ -25,7 +24,7 @@ class Table extends GraphicalObject {
 
 	function addTableSupports(obj,x,y,z) {
 		'use scrict';
-
+		
 		geometry = new THREE.CylinderGeometry(0.5,0.5,7);
 		material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
 		mesh = new THREE.Mesh(geometry, material);
