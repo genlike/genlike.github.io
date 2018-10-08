@@ -11,10 +11,10 @@ class Chair extends GraphicalObject {
         this.chair_top = new GraphicalObject();
         this.chair_bottom = new GraphicalObject();
         this.chair_wheels = new GraphicalObject();
-        
+
         this.userData = { Speed: 0, rotationSpeed: 0};
         material = new THREE.MeshBasicMaterial({color: color, wireframe:true});
-    
+
         // Bottom Section
         let n=numberLegs;
         //Initial position of first wheel
@@ -23,7 +23,7 @@ class Chair extends GraphicalObject {
             rotation += (2*Math.PI)/n
             // Position and rotation around Y axis
             this.addChairWheel(this.chair_wheels, x + wheelCenterDistance * Math.cos(rotation), y - 8, z - wheelCenterDistance * Math.sin(rotation), Math.PI/2);
-            
+
             // Position, rotation around Y axis and leg length
             this.addChairWheelSupport(this.chair_bottom, x + (wheelCenterDistance / 2) * Math.cos(rotation), y - 7.7, z - (wheelCenterDistance / 2) * Math.sin(rotation), rotation, wheelCenterDistance);
         }
@@ -31,13 +31,13 @@ class Chair extends GraphicalObject {
 
         //Center Section
         this.addChairCenterPiece(this.chair_bottom,x,y-1,z);
-    
-    
+
+
         //ChairSection
         this.addChairSeat(this.chair_top,x,y-2,z);
         this.addChairBack(this.chair_top,x,y-2,z);
-    
-    
+
+
         //Adding to the scene
         this.add(this.chair_top);
         this.add(this.chair_bottom);
@@ -51,7 +51,7 @@ class Chair extends GraphicalObject {
         mesh.position.set(x, y-2, z);
         obj.add(mesh);
     }
-    
+
     addChairBack(obj, x, y, z) {
         'use strict';
         geometry = new THREE.CubeGeometry(5, 5, 1);
@@ -60,8 +60,8 @@ class Chair extends GraphicalObject {
         mesh.position.set(x, y, z-3);
         obj.add(mesh);
     }
-    
-    
+
+
     addChairCenterPiece(obj, x,y,z){
         'use strict';
         geometry = new THREE.CubeGeometry(1, 3, 1);
@@ -70,7 +70,7 @@ class Chair extends GraphicalObject {
         mesh.position.set(x, y-5, z);
         obj.add(mesh);
     }
-    
+
     addChairWheel(obj,x,y,z,rad){
         'use strict';
     
@@ -82,10 +82,10 @@ class Chair extends GraphicalObject {
         mesh.add(new THREE.AxisHelper(5));
         obj.add(mesh);
     }
-    
+
     addChairWheelSupport(obj, x, y, z, rad, length) {
         'use strict';
-    
+
         geometry = new THREE.CubeGeometry(length+0.4, 0.2, 1);
         material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true });
         mesh = new THREE.Mesh(geometry, material);
@@ -112,7 +112,7 @@ class Chair extends GraphicalObject {
         this.chair_top.rotateY(this.userData.rotationSpeed*delta);
     }
 
-    rotateWheels(chair, direction){
+    rotateWheels(direction){
         this.chair_wheels.children.forEach( wheel => {
     
             let wheelDirection = new THREE.Vector3();
@@ -147,6 +147,3 @@ class Chair extends GraphicalObject {
 			rotateWheels(chair, chairDirection);
     }
 }
-
-
-
