@@ -8,7 +8,6 @@ class Scenery {
         this.angularSpeedCap = 2 * Math.PI * 4;
         this.frustumSize = 50;
 
-        var test = this;
         renderer = new THREE.WebGLRenderer({
             antialias: true
         });
@@ -149,19 +148,19 @@ class Scenery {
 
 
             chair.position.add(new THREE.Vector3((chair.userData.xSpeed * chairDirection.x) * delta, 0, (chair.userData.xSpeed * chairDirection.z) *delta ));
-    		if (Math.abs(chair.userData.xSpeed)>0.01)
-    			rotateWheels(chair, chairDirection);
+    		//if (Math.abs(chair.userData.xSpeed)>0.01) //TODO
+    			//rotateWheels(chair, chairDirection);
 
-            // setTimeout(function () {
-            //     requestAnimationFrame(function(test = this){
-            //         console.log("test");
-            //         test.animate;});
-            // }, 1000 / 60);
+            var test = this;
+            setTimeout(function () {
+                requestAnimationFrame(function(){
 
-            requestAnimationFrame(function(){
-                console.log("test:"+ test1.acceleration);
-                //test.animate;
-            });
+                    test.animate();
+                });
+            }, 1000 / 60);
+
+
+
 
             this.render();
 
