@@ -19,7 +19,7 @@ class Table extends GraphicalObject {
 		material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true});
 		mesh = new THREE.Mesh(geometry, material);
 		mesh.position.set(x,y - 1,z);
-		this.add(mesh);
+		obj.add(mesh);
 	}
 
 	addTableSupports(obj,x,y,z) {
@@ -29,6 +29,6 @@ class Table extends GraphicalObject {
 		material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
 		mesh = new THREE.Mesh(geometry, material);
 		mesh.position.set(x,y,z);
-		this.add(mesh);
+		obj.add(mesh);
 	}
 }
