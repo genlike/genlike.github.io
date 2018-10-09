@@ -2,7 +2,7 @@ class Lamp extends GraphicalObject {
     constructor(x,y,z){
         super();
 
-        material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
+        //material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
 
         this.addLampBase(x,y ,z);
         this.addLampPole(x, y + 5.266, z);
@@ -15,9 +15,9 @@ class Lamp extends GraphicalObject {
     addLampBase(x,y,z){
         'use scrict';
 
-        geometry = new THREE.CubeGeometry(5,0.3,5);
-        material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-        mesh = new THREE.Mesh(geometry, material);
+        let geometry = new THREE.CubeGeometry(5,0.3,5);
+        let material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+        let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y+ 0.150,z);
         this.add(mesh);
 
@@ -31,9 +31,9 @@ class Lamp extends GraphicalObject {
     addLampPole(x,y,z) {
         'use scrict';
 
-        geometry = new THREE.CylinderGeometry(0.3,0.3,10,21);
-        material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-        mesh = new THREE.Mesh(geometry, material);
+        let geometry = new THREE.CylinderGeometry(0.3,0.3,10,21);
+        let material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+        let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z);
         this.add(mesh);
     }
@@ -41,9 +41,9 @@ class Lamp extends GraphicalObject {
     addLampSphere(x,y,z) {
         'use scrict';
 
-        geometry = new THREE.SphereGeometry(0.58,20,20);
-        material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-        mesh = new THREE.Mesh(geometry, material);
+        let geometry = new THREE.SphereGeometry(0.58,20,20);
+        let material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+        let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z);
         this.add(mesh);
     }
@@ -51,9 +51,9 @@ class Lamp extends GraphicalObject {
     addLampCover(x,y,z) {
         'use scrict';
 
-        geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
-        material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
-        mesh = new THREE.Mesh(geometry, material);
+        let geometry = new THREE.BoxGeometry(3.21,3.21,0.14);
+        let material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+        let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z+1.55);
         this.add(mesh);
 
