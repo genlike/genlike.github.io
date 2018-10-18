@@ -25,10 +25,18 @@ class Scenery extends THREE.Scene{
         return min+interval;
     }
 
+
+
     createScene() {
         //General Arguments (z width, x lenght)
         let numberOfBalls = 10;
         let tableWidth = 150; 
+
+        //table of colors
+        let colors = [
+            0xff0000,0x800000,0xffff00,0x808000,0xffffff,
+            0x008000,0x00ffff,0x008080,0x0000ff,0x000080
+        ]
 
         this.add(new THREE.AxisHelper(40));
         
@@ -37,8 +45,8 @@ class Scenery extends THREE.Scene{
         this.add(this.poolTable);
         for(let i = 0; i<numberOfBalls; i++){
             let randomZ = this.getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-            let randomX = Math.random()*(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-            this.balls.push(new Ball(randomX, this.poolTable.wallHeight/2, randomZ,this.poolTable.wallHeight/2));
+            let randomX = this.getRandom(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
+            this.balls.push(new Ball(randomX, this.poolTable.wallHeight/2, randomZ,this.poolTable.wallHeight/2,colors[i]));
             this.add(this.balls[i]);
         }
     }
