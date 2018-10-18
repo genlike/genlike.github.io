@@ -1,12 +1,14 @@
-var scenery
+var scenery;
 
 var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
 
 
+var wheelCamera = false;
+
 
 function init(){
     scenery = new Scenery();
-    scenery.render();
+    //scenery.render();
 
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup",onKeyUp);
@@ -21,19 +23,26 @@ function animate() {
 
     let delta = scenery.clock.getDelta();
 
-    if(buttonUP)
-        scenery.chair.moveChair(false);
-    if (buttonDOWN)
-        scenery.chair.moveChair();
-    if (buttonLEFT)
-        scenery.chair.rotateChair(false);
-    if (buttonRIGHT)
-        scenery.chair.rotateChair();
-    
-    scenery.chair.updateMovement(delta);
+////////////////////////////////////////////
+/*    if (wheelCamera) {
+        let wheelPos = scenery.chair.chair_wheels.children[0];
+        let distance = 2;
+        let vec = new THREE.Vector3();
+        let vec2 = new THREE.Vector3();
+
+        wheelPos.getWorldPosition(vec);
+        wheelPos.getWorldDirection(vec2);
+
+        
+        scenery.camera.position.x = vec.x + vec2.x *distance ;
+        scenery.camera.position.y = vec.y + vec2.y *distance; 
+        scenery.camera.position.z = vec.z + vec2.z*distance;
+        scenery.camera.lookAt(vec);
+    }
+*/
+/////////////////////////////////////////////
 
 
-    var test = this;
     setTimeout(function () {
         requestAnimationFrame(animate);
     }, 1000 / 60);
@@ -46,10 +55,12 @@ function animate() {
 
 
         let aspect = window.innerWidth / window.innerHeight;
+        
         scenery.camera.left   = -scenery.frustumSize * aspect / 2;
         scenery.camera.right  = scenery.frustumSize * aspect / 2;
         scenery.camera.top    = scenery.frustumSize / 2;
         scenery.camera.bottom = -scenery.frustumSize / 2;
+        
         scenery.camera.updateProjectionMatrix();
         scenery.renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -95,7 +106,6 @@ function animate() {
     3           51
     4           52
     */
-        console.log(e.keyCode);
         switch (e.keyCode) {
         case 38:
             buttonUP = true;
@@ -119,9 +129,6 @@ function animate() {
             });
             break;
         case 83:  //S
-        //case 115: //s
-            //ball.userData.jumping = !ball.userData.jumping;
-            //break;
         case 69:  //E
         case 101: //e
             scenery.traverse(function (node) {
@@ -132,22 +139,39 @@ function animate() {
         break;
 
         case  49: // 1
+            if (wheelCamera)
+                scenery.createCamera();
             scenery.moveCamera(100,0,0);
         break;
         
         case  50: // 2
-            scenery.moveCamera(-100,0,0);
+            if (wheelCamera)
+                scenery.createCamera();
+            scenery.moveCamera(0,100,0);
+            wheelCamera = false;
         break;
         
         case  51: // 3
+            if (wheelCamera)
+                scenery.createCamera();
             scenery.moveCamera(0,0,100);
+            wheelCamera = false;
         break;
-
         case  52: // 4
-        scenery.camera.position.x = 100;
-        scenery.camera.position.y = 100;
-        scenery.camera.position.z = 100;
-        scenery.camera.lookAt(scenery.chair.position); 
+            if (wheelCamera)
+                scenery.createCamera();
+            scenery.moveCamera(100,100,100);
+            wheelCamera = false;
+        break;
+        case  53: // 4
+            if (!wheelCamera) scenery.camera = changeToWheelCamera();
+            wheelCamera = true;
         break;
         }
+    }
+
+    function changeToWheelCamera(){
+        'use strict'
+        let cam = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+        return cam;
     }

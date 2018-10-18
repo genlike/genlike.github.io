@@ -1,5 +1,5 @@
-const acceleration = 4;
-const speedCap = 50;
+const acceleration = 1;
+const speedCap = 500;
 const angularAcceleration = 2*Math.PI*0.01;
 const angularSpeedCap = 2 * Math.PI * 4;
 const torusRadius = 0.3;
@@ -28,6 +28,7 @@ class Chair extends GraphicalObject {
             // Position, rotation around Y axis and leg length
             this.addChairWheelSupport(this.chair_bottom, x + (wheelCenterDistance / 2) * Math.cos(rotation), y - 7.7, z - (wheelCenterDistance / 2) * Math.sin(rotation), rotation, wheelCenterDistance);
         }
+        
         this.chair_bottom.add(this.chair_wheels);
 
         //Center Section
@@ -75,7 +76,7 @@ class Chair extends GraphicalObject {
     addChairWheel(obj,x,y,z,rad){
         'use strict';
     
-        let geometry = new THREE.TorusGeometry(torusRadius, 0.2, 16, 100);
+        let geometry = new THREE.TorusGeometry(torusRadius, 0.2, 16, 20);
         let material = new THREE.MeshBasicMaterial({ color: 0xffff00 , wireframe: true});
         let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z);
@@ -111,11 +112,14 @@ class Chair extends GraphicalObject {
             let wheelDirection = new THREE.Vector3();
             wheel.getWorldDirection(wheelDirection);
             let angle = wheelDirection.angleTo(direction);
-            //console.log(wheel);
-            wheel.rotation.y += angle+Math.PI/2;
-            wheel.rotation.z += this.userData.Speed/torusRadius;
+            
+            if (this.userData.Speed>0)
+                wheel.rotation.y -= angle-Math.PI/2;
+            else
+                wheel.rotation.y += angle-Math.PI/2; 
+                
+            wheel.rotation.z += this.userData.Speed*0.025;
         });
-        this.chair_wheels.children
     }
     moveChair( Forward=true){
 
@@ -126,16 +130,17 @@ class Chair extends GraphicalObject {
     }
 
     updateMovement(delta){
-        /* atrito movimentacao */
+        /* atrito rotacao */
         if (Math.abs(this.userData.rotationSpeed) > 0) {
             if (this.userData.rotationSpeed < 0) {
                 this.userData.rotationSpeed += angularAcceleration / (2.3);
             } else {
                 this.userData.rotationSpeed -= angularAcceleration / (2.3);
             }
-        }
-    
+        }    
         this.chair_top.rotateY(this.userData.rotationSpeed*delta);
+
+
         /* atrito translacao */ 
         if (Math.abs(this.userData.Speed) > 0) {
             if (this.userData.Speed < 0) {
@@ -144,11 +149,11 @@ class Chair extends GraphicalObject {
                 this.userData.Speed -= acceleration/4; 
             }
         }
-
         let chairDirection = new THREE.Vector3();
         this.chair_top.getWorldDirection(chairDirection);
-
         this.position.add(new THREE.Vector3((this.userData.Speed * chairDirection.x) * delta, 0, (this.userData.Speed * chairDirection.z) *delta ));
+
+
 		if (Math.abs(this.userData.Speed)>0.01)
 			this.rotateWheels(chairDirection);
 

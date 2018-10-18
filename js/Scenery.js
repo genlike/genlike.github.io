@@ -1,14 +1,9 @@
 class Scenery extends THREE.Scene{
-
+    
     constructor(){
         super();
-        this.frustumSize = 50;
-
-        this.buttonUP = false;
-        this.buttonDOWN = false;
-        this.buttonRIGHT = false;
-        this.buttonLEFT = false;
-
+        this.frustumSize = 100;
+        
         this.renderer = new THREE.WebGLRenderer({
             antialias: true
         });
@@ -22,20 +17,30 @@ class Scenery extends THREE.Scene{
 
     }
 
-
+    getRandom(min,max){
+        'use strict'
+        let r = Math.random();
+        let interval = (max - min)
+        interval = interval*r;
+        return min+interval;
+    }
 
     createScene() {
+        //General Arguments (z width, x lenght)
+        let numberOfBalls = 10;
+        let tableWidth = 150; 
 
         this.add(new THREE.AxisHelper(40));
-        this.chair = new Chair(0,5,0);
-        this.add(this.chair);
-        //createChair(0,5,0,3);
-        //createTable(0,5,12);
-
-        //createLamp(13,-3.5,5);
-        this.add(new Table(0,5,12));
-        this.add(new Lamp(13,-3.5,5));
-
+        
+        this.poolTable = new PoolTable(0,0,0,tableWidth);
+        this.balls = [];
+        this.add(this.poolTable);
+        for(let i = 0; i<numberOfBalls; i++){
+            let randomZ = this.getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
+            let randomX = Math.random()*(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
+            this.balls.push(new Ball(randomX, this.poolTable.wallHeight/2, randomZ,this.poolTable.wallHeight/2));
+            this.add(this.balls[i]);
+        }
     }
 
 
@@ -47,9 +52,9 @@ class Scenery extends THREE.Scene{
         // camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras,
 
 
-        this.camera.position.x = 100 ;
-        this.camera.position.y = 100 ;
-        this.camera.position.z = 100 ;
+        this.camera.position.x = 100;
+        this.camera.position.y = 100;
+        this.camera.position.z = 100;
 
         this.camera.lookAt(this.position);
 
