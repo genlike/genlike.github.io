@@ -1,9 +1,9 @@
 class Scenery extends THREE.Scene{
-    
+
     constructor(){
         super();
         this.frustumSize = 150;
-        
+
         this.renderer = new THREE.WebGLRenderer({
             antialias: true
         });
@@ -14,6 +14,9 @@ class Scenery extends THREE.Scene{
 
         this.createScene();
         this.createCamera();
+        this.createPerspectiveCamera();
+        this.createCloseUpCamera();
+        this.currCamera = this.camera;
     }
 
     getRandom(min,max){
@@ -30,7 +33,7 @@ class Scenery extends THREE.Scene{
     createScene() {
         //General Arguments (z width, x lenght)
         let numberOfBalls = 10;
-        let tableWidth = 150; 
+        let tableWidth = 150;
 
         //table of colors
         let colors = [
@@ -39,19 +42,19 @@ class Scenery extends THREE.Scene{
         ]
 
         //this.add(new THREE.AxisHelper(40));
-        
+
         this.poolTable = new PoolTable(0,0,0,tableWidth);
         this.balls = [];
 
         this.add(this.poolTable);
-        
+
         for(let i = 0; i<numberOfBalls; i++){
             let randomZ = getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
             let randomX = getRandom(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
             let b = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[i]);
-            
+
             b.position.add(new THREE.Vector3(randomX, this.poolTable.wallHeight/2, randomZ));
-            this.balls.forEach(ball => {  
+            this.balls.forEach(ball => {
                 do {
                     let rDist = (ball.radius + b.radius)**2;
                     let ballDist = (b.position.x - ball.position.x)**2 + (b.position.z - ball.position.z)**2;
@@ -63,15 +66,15 @@ class Scenery extends THREE.Scene{
                     b.position.x = randomX;
                     b.position.z = randomZ;
                 }while (true)
-                
+
             });
 
-            
+
             this.balls.push(b);
             this.add(this.balls[i]);
     }
 
-        
+
       /*  let a = new Ball(0,this.poolTable.wallHeight/2,0,this.poolTable.wallHeight/2,colors[0]);
         let b = new Ball(0,this.poolTable.wallHeight/2,0,this.poolTable.wallHeight/2,colors[1]);
         a.userData.Speed = new THREE.Vector3(0,0,-10);
@@ -105,33 +108,35 @@ class Scenery extends THREE.Scene{
     }
 
     createPerspectiveCamera() {
-        
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-        this.camera.position.x = 100;
-        this.camera.position.y = 100;
-        this.camera.position.z = 100;
+        this.Pcamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
+
+        this.Pcamera.position.x = 100;
+        this.Pcamera.position.y = 100;
+        this.Pcamera.position.z = 100;
 
     }
 
     createCloseUpCamera(){
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
-        this.balls[0].add(this.camera);
-        
-        this.camera.position.x = 10;
-        this.camera.position.y = 10;
-        this.camera.position.z = 10;
+        this.closeCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
+
+        this.balls[0].add(this.closeCamera);
+        this.closeCamera.position.x = 15;
+        this.closeCamera.position.y = 25;
+        this.closeCamera.position.z = 15;
+
 
     }
 
     render() {
 
-        this.renderer.render(this, this.camera);
+        this.renderer.render(this, this.currCamera);
+
     }
     moveCamera(x,y,z){
         this.camera.position.x = x;
         this.camera.position.y = y;
         this.camera.position.z = z;
-        this.camera.lookAt(this.position);    
+        this.camera.lookAt(this.position);
     }
 }
