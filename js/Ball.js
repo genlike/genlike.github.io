@@ -1,6 +1,6 @@
 
-const acceleration = 1;
-const speedCap = 53.5;
+const acceleration = 1.003;
+const speedCap = 500;
 const angularAcceleration = 2*Math.PI*0.01;
 const angularSpeedCap = 2 * Math.PI * 4;
 const torusRadius = 0.3;
@@ -29,15 +29,15 @@ class Ball extends GraphicalObject {
         let material = new THREE.MeshBasicMaterial({ color: this.color, wireframe: true});
         let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z);
+        mesh.add(new THREE.AxisHelper(10));
         this.add(mesh);
     }
 
     updateMovement(delta){
 
-        /* SpeedCap 
-        if (this.userData.Speed < speedCap)
-            this.userData.Speed += acceleration;
-        */
+        if (this.userData.Speed.length() < speedCap)
+            this.userData.Speed.multiplyScalar(acceleration);
+        
         this.oldPosition = this.position;
         let newPosition = new THREE.Vector3( this.position.x + (this.userData.Speed.x) * delta, 
                                             this.position.y, 

@@ -32,11 +32,11 @@ function animate() {
         ball.userData.Speed.z = -ball.userData.Speed.z; 
         newPosition = ball.oldPosition;
     }
+    
      //console.log(scenery.tempballs);
       scenery.tempballs.forEach(tempball => {
         let rDist = (ball.radius + tempball.radius)**2;
         let ballDist = (newPosition.x - tempball.position.x)**2 + (newPosition.z - tempball.position.z)**2
-        //console.log(rDist + "\\" + ballDist)
 
         if (rDist >= ballDist){
             let SpeedInitialB1 = new THREE.Vector3(ball.userData.Speed.x,0,ball.userData.Speed.z);
@@ -53,31 +53,31 @@ function animate() {
 
             let SpeedFinalB1 = SpeedInitialB1.clone();
             SpeedFinalB1.sub(subCenters);
-
-            ball.userData.Speed = SpeedFinalB1;
+                
+            ball.userData.Speed = SpeedFinalB1;        
 
             let subSpeeds2 = new THREE.Vector3(tempball.userData.Speed.x,0,tempball.userData.Speed.z);
-            subSpeeds2.sub(SpeedInitialB2);
+            subSpeeds2.sub(SpeedInitialB1);
             
             let subCenters2 = new THREE.Vector3(tempball.position.x,tempball.position.y,tempball.position.z);
-            subCenters2.sub(ball.position);
+            subCenters2.sub(ball.oldPosition);
 
             let squaredLength2 = subCenters2.lengthSq();
             let b = (subSpeeds2.dot(subCenters2))/squaredLength2;
-            subCenters.multiplyScalar(b);
+            subCenters2.multiplyScalar(b);
 
             let SpeedFinalB2 = SpeedInitialB2.clone();
             SpeedFinalB2.sub(subCenters2);
-
+            
             tempball.userData.Speed = SpeedFinalB2;
-
-            newPosition = ball.oldPosition;
+            
         }
-
+        
       });
       scenery.tempballs.shift();
-
+      //console.log(ball)
       ball.applyMovement(newPosition);
+      
     });
     
 
@@ -187,41 +187,30 @@ function animate() {
         case 69:  //E
         case 101: //e
             scenery.traverse(function (node) {
-                if (node instanceof THREE.AxisHelper) {
-                    node.visible = !node.visible;
+                if(node instanceof Ball){
+                    node.traverse(function (e){
+                        if (e instanceof THREE.AxisHelper) {
+                            e.visible = !e.visible;
+                        }
+                    });
                 }
             });
         break;
 
         case  49: // 1
-            if (wheelCamera)
-                scenery.createCamera();
-            scenery.moveCamera(100,0,0);
+            scenery.moveCamera(0,100,0);
         break;
         
         case  50: // 2
-            if (wheelCamera)
-                scenery.createCamera();
-            scenery.moveCamera(0,100,0);
+            scenery.createPerspectiveCamera();
+            scenery.moveCamera(100,100,100);
             wheelCamera = false;
         break;
         
         case  51: // 3
-            if (wheelCamera)
-                scenery.createCamera();
-            scenery.moveCamera(0,0,100);
-            wheelCamera = false;
+            scenery.camera = scenery.CloseUpCamera;
         break;
-        case  52: // 4
-            if (wheelCamera)
-                scenery.createCamera();
-            scenery.moveCamera(100,100,100);
-            wheelCamera = false;
-        break;
-        case  53: // 4
-            if (!wheelCamera) scenery.camera = changeToWheelCamera();
-            wheelCamera = true;
-        break;
+
         }
     }
 
