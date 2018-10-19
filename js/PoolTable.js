@@ -1,5 +1,4 @@
 class PoolTable extends GraphicalObject {
-	
 	constructor(x,y,z,width=150){
 		super();
 		this.width = width;
@@ -11,7 +10,6 @@ class PoolTable extends GraphicalObject {
 		this.addTableBigWall(this, x + this.length/2-this.wallWidth/2, y+this.wallHeight/2, z);
 		this.addTableSmallWall(this, x, y+this.wallHeight/2, z - this.width/2+this.wallWidth/2);
 		this.addTableSmallWall(this, x, y+this.wallHeight/2, z + this.width/2-this.wallWidth/2 );
-		
 	}
 
 	addTableFloor(obj,x,y,z) {

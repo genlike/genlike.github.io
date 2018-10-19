@@ -2,7 +2,7 @@ class Scenery extends THREE.Scene{
     
     constructor(){
         super();
-        this.frustumSize = 100;
+        this.frustumSize = 150;
         
         this.renderer = new THREE.WebGLRenderer({
             antialias: true
@@ -19,6 +19,7 @@ class Scenery extends THREE.Scene{
 
     getRandom(min,max){
         'use strict'
+
         let r = Math.random();
         let interval = (max - min)
         interval = interval*r;
@@ -29,7 +30,7 @@ class Scenery extends THREE.Scene{
 
     createScene() {
         //General Arguments (z width, x lenght)
-        let numberOfBalls = 10;
+        let numberOfBalls = 5;
         let tableWidth = 150; 
 
         //table of colors
@@ -42,13 +43,22 @@ class Scenery extends THREE.Scene{
         
         this.poolTable = new PoolTable(0,0,0,tableWidth);
         this.balls = [];
+
         this.add(this.poolTable);
+        
         for(let i = 0; i<numberOfBalls; i++){
-            let randomZ = this.getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-            let randomX = this.getRandom(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-            this.balls.push(new Ball(randomX, this.poolTable.wallHeight/2, randomZ,this.poolTable.wallHeight/2,colors[i]));
+            let randomZ = getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
+            let randomX = getRandom(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
+            let b = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[i]);
+            
+            b.position.add(new THREE.Vector3(randomX, this.poolTable.wallHeight/2, randomZ));
+
+            /*let direction = Math.random()*2*Math.PI;
+            b.rotateY(direction);*/
+            this.balls.push(b);
             this.add(this.balls[i]);
         }
+        
     }
 
 

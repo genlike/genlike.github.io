@@ -8,8 +8,6 @@ var wheelCamera = false;
 
 function init(){
     scenery = new Scenery();
-    //scenery.render();
-
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup",onKeyUp);
     window.addEventListener("resize", onResize);
@@ -18,10 +16,70 @@ function init(){
 function animate() {
     'use strict';
     
-    
-    //console.log("Running..." + "UP :" + buttonUP+ "DOWN :" + buttonDOWN + "LEFT :" + buttonLEFT + "RIGHT :" + buttonRIGHT);
-
     let delta = scenery.clock.getDelta();
+    scenery.tempballs = scenery.balls.slice(1);
+    scenery.balls.forEach(ball => {
+       let newPosition = ball.updateMovement(delta);
+       //console.log(newPosition.x+ball.radius );  
+       // console.log(newPosition.x+ball.radius + "| |" + (scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2));
+       if (newPosition.x+ball.radius > scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2 || newPosition.x - ball.radius  < -scenery.poolTable.length/2 + scenery.poolTable.wallWidth/2){
+        //console.log(newPosition.x+ball.radius );  
+            newPosition = ball.oldPosition;
+            ball.userData.Speed.x = -ball.userData.Speed.x; 
+        }
+      if (newPosition.z+ball.radius > scenery.poolTable.width/2 - scenery.poolTable.wallWidth/2 || newPosition.z - ball.radius < -scenery.poolTable.width/2 + scenery.poolTable.wallWidth/2){
+      //  console.log("Vertical");  
+        ball.userData.Speed.z = -ball.userData.Speed.z; 
+        newPosition = ball.oldPosition;
+    }
+     //console.log(scenery.tempballs);
+      scenery.tempballs.forEach(tempball => {
+        let rDist = (ball.radius + tempball.radius)**2;
+        let ballDist = (newPosition.x - tempball.position.x)**2 + (newPosition.z - tempball.position.z)**2
+        //console.log(rDist + "\\" + ballDist)
+
+        if (rDist >= ballDist){
+            let SpeedInitialB1 = new THREE.Vector3(ball.userData.Speed.x,0,ball.userData.Speed.z);
+            let subSpeeds = new THREE.Vector3(ball.userData.Speed.x,0,ball.userData.Speed.z);
+            let SpeedInitialB2 = new THREE.Vector3(tempball.userData.Speed.x,0,tempball.userData.Speed.z);
+            subSpeeds.sub(SpeedInitialB2);
+            
+            let subCenters = new THREE.Vector3(ball.position.x,ball.position.y,ball.position.z);
+            subCenters.sub(tempball.position);
+
+            let squaredLength = subCenters.lengthSq();
+            let a = (subSpeeds.dot(subCenters))/squaredLength;
+            subCenters.multiplyScalar(a);
+
+            let SpeedFinalB1 = SpeedInitialB1.clone();
+            SpeedFinalB1.sub(subCenters);
+
+            ball.userData.Speed = SpeedFinalB1;
+
+            let subSpeeds2 = new THREE.Vector3(tempball.userData.Speed.x,0,tempball.userData.Speed.z);
+            subSpeeds2.sub(SpeedInitialB2);
+            
+            let subCenters2 = new THREE.Vector3(tempball.position.x,tempball.position.y,tempball.position.z);
+            subCenters2.sub(ball.position);
+
+            let squaredLength2 = subCenters2.lengthSq();
+            let b = (subSpeeds2.dot(subCenters2))/squaredLength2;
+            subCenters.multiplyScalar(b);
+
+            let SpeedFinalB2 = SpeedInitialB2.clone();
+            SpeedFinalB2.sub(subCenters2);
+
+            tempball.userData.Speed = SpeedFinalB2;
+
+            newPosition = ball.oldPosition;
+        }
+
+      });
+      scenery.tempballs.shift();
+
+      ball.applyMovement(newPosition);
+    });
+    
 
 ////////////////////////////////////////////
 /*    if (wheelCamera) {
@@ -29,11 +87,8 @@ function animate() {
         let distance = 2;
         let vec = new THREE.Vector3();
         let vec2 = new THREE.Vector3();
-
         wheelPos.getWorldPosition(vec);
         wheelPos.getWorldDirection(vec2);
-
-        
         scenery.camera.position.x = vec.x + vec2.x *distance ;
         scenery.camera.position.y = vec.y + vec2.y *distance; 
         scenery.camera.position.z = vec.z + vec2.z*distance;
@@ -174,4 +229,13 @@ function animate() {
         'use strict'
         let cam = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
         return cam;
+    }
+
+    function getRandom(min,max){
+        'use strict'
+
+        let r = Math.random();
+        let interval = (max - min)
+        interval = interval*r;
+        return min+interval;
     }
