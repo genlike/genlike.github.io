@@ -54,6 +54,8 @@ class Scenery extends THREE.Scene{
             let b = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[i]);
 
             b.position.add(new THREE.Vector3(randomX, this.poolTable.wallHeight/2, randomZ));
+
+            //Verificar se acabamos de mover uma bola para dentro de outra, se sim então dar nova posição
             this.balls.forEach(ball => {
                 do {
                     let rDist = (ball.radius + b.radius)**2;

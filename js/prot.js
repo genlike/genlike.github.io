@@ -20,6 +20,7 @@ function animate() {
     scenery.tempballs = scenery.balls.slice(1);
     scenery.balls.forEach(ball => {
        let newPosition = ball.updateMovement(delta);
+        ball.applyRotation(delta);
        //console.log(newPosition.x+ball.radius );
        // console.log(newPosition.x+ball.radius + "| |" + (scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2));
        if (newPosition.x+ball.radius > scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2 || newPosition.x - ball.radius  < -scenery.poolTable.length/2 + scenery.poolTable.wallWidth/2){
