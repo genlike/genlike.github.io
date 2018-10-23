@@ -1,8 +1,9 @@
 
 const acceleration = 1.000;
 
-const minSpeed = 10;
-const maxSpeed = 30;
+const minSpeed = 10; 
+const maxSpeed = 20;
+
 
 const speedCap = 500;
 
@@ -23,12 +24,10 @@ class Ball extends GraphicalObject {
 
     }
 
-
-
     addSphere(obj,x,y,z) {
         'use scrict';
 
-        let geometry = new THREE.SphereGeometry(this.radius,30,30);
+        let geometry = new THREE.SphereGeometry(this.radius,30,10);
         let material = new THREE.MeshBasicMaterial({ color: this.color, wireframe: true});
         let mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(x,y,z);
@@ -42,9 +41,9 @@ class Ball extends GraphicalObject {
             this.userData.Speed.multiplyScalar(acceleration);
         
         this.oldPosition = this.position;
-        let newPosition = new THREE.Vector3( this.position.x + (this.userData.Speed.x) * delta, 
+        let newPosition = new THREE.Vector3( this.position.x + (this.userData.Speed.x *speedFactor) * delta,
                                             this.position.y, 
-                                            this.position.z + (this.userData.Speed.z) *delta);
+                                            this.position.z + (this.userData.Speed.z*speedFactor) *delta);
 
         return newPosition;
     }
@@ -63,11 +62,8 @@ class Ball extends GraphicalObject {
         let angle = (direction.length()*delta)/this.radius;
         direction.normalize();
         direction.cross(new THREE.Vector3(0,-1,0));
-        console.log("INICIO")
-        console.log(direction)
         matrix.makeRotationAxis(direction,angle)
-        console.log(matrix)
-        console.log("FIM")
+
 
         this.sphere.applyMatrix(matrix);
         

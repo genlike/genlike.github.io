@@ -2,15 +2,31 @@ var scenery;
 
 var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
 
+var speedFactor = 1;
 
 var wheelCamera = false;
+
+var lvlUpInterval = 60000;
 
 
 function init(){
     scenery = new Scenery();
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup",onKeyUp);
+    /*Acho que nao podemos ter dois eventos de resize, mas tambem nao podemos passar argumentos na funcao, como fazer?*/
     window.addEventListener("resize", onResize);
+    //setLvlUp();
+}
+
+
+
+function lvlup(){
+    scenery.balls.forEach(ball => {
+            ball.userData.Speed.multiplyScalar(1.5);
+        }); 
+    setTimeout(function() {
+        lvlup();    
+    }, lvlUpInterval);
 }
 
 function animate() {
@@ -21,123 +37,112 @@ function animate() {
     scenery.balls.forEach(ball => {
        let newPosition = ball.updateMovement(delta);
         ball.applyRotation(delta);
-       //console.log(newPosition.x+ball.radius );
-       // console.log(newPosition.x+ball.radius + "| |" + (scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2));
-       if (newPosition.x+ball.radius > scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2 || newPosition.x - ball.radius  < -scenery.poolTable.length/2 + scenery.poolTable.wallWidth/2){
-        //console.log(newPosition.x+ball.radius );
-            newPosition = ball.oldPosition;
-            ball.userData.Speed.x = -ball.userData.Speed.x;
-        }
-      if (newPosition.z+ball.radius > scenery.poolTable.width/2 - scenery.poolTable.wallWidth/2 || newPosition.z - ball.radius < -scenery.poolTable.width/2 + scenery.poolTable.wallWidth/2){
-      //  console.log("Vertical");
-        ball.userData.Speed.z = -ball.userData.Speed.z;
-        newPosition = ball.oldPosition;
-    }
 
-     //console.log(scenery.tempballs);
+       /*Walls*/
+       if (newPosition.x+ball.radius > scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2 ||
+        newPosition.x - ball.radius  < -scenery.poolTable.length/2 + scenery.poolTable.wallWidth/2){
+            ball.userData.Speed.x = -ball.userData.Speed.x;
+            newPosition = ball.oldPosition;
+        }
+
+      if (newPosition.z+ball.radius > scenery.poolTable.width/2 - scenery.poolTable.wallWidth/2 || 
+        newPosition.z - ball.radius < -scenery.poolTable.width/2 + scenery.poolTable.wallWidth/2){
+        
+            ball.userData.Speed.z = -ball.userData.Speed.z;
+            newPosition = ball.oldPosition;
+        }
+
+     /*COLISIONS WITH OTHER BALLS*/
       scenery.tempballs.forEach(tempball => {
         let rDist = (ball.radius + tempball.radius)**2;
         let ballDist = (newPosition.x - tempball.position.x)**2 + (newPosition.z - tempball.position.z)**2
-
+        
         if (rDist >= ballDist){
-            let SpeedInitialB1 = new THREE.Vector3(ball.userData.Speed.x,0,ball.userData.Speed.z);
-            let subSpeeds = new THREE.Vector3(ball.userData.Speed.x,0,ball.userData.Speed.z);
-            let SpeedInitialB2 = new THREE.Vector3(tempball.userData.Speed.x,0,tempball.userData.Speed.z);
+
+            let SpeedInitialB1 = ball.userData.Speed.clone();
+            let subSpeeds = ball.userData.Speed.clone();
+            let SpeedInitialB2 = tempball.userData.Speed.clone();
+
             subSpeeds.sub(SpeedInitialB2);
 
             let subCenters = new THREE.Vector3(ball.position.x,ball.position.y,ball.position.z);
             subCenters.sub(tempball.position);
 
             let squaredLength = subCenters.lengthSq();
+
             let a = (subSpeeds.dot(subCenters))/squaredLength;
+            
             subCenters.multiplyScalar(a);
 
             let SpeedFinalB1 = SpeedInitialB1.clone();
             SpeedFinalB1.sub(subCenters);
 
+
+
             ball.userData.Speed = SpeedFinalB1;
-
-            let subSpeeds2 = new THREE.Vector3(tempball.userData.Speed.x,0,tempball.userData.Speed.z);
-            subSpeeds2.sub(SpeedInitialB1);
-
             let subCenters2 = new THREE.Vector3(tempball.position.x,tempball.position.y,tempball.position.z);
-            subCenters2.sub(ball.oldPosition);
-
-            let squaredLength2 = subCenters2.lengthSq();
-            let b = (subSpeeds2.dot(subCenters2))/squaredLength2;
-            subCenters2.multiplyScalar(b);
+            subCenters2.sub(ball.position);
+            subCenters2.multiplyScalar(a);
 
             let SpeedFinalB2 = SpeedInitialB2.clone();
             SpeedFinalB2.sub(subCenters2);
 
             tempball.userData.Speed = SpeedFinalB2;
-
+                
+            
         }
-
-      });
+    });
+   
       scenery.tempballs.shift();
-      //console.log(ball)
       ball.applyMovement(newPosition);
 
     });
 
 
-////////////////////////////////////////////
-/*    if (wheelCamera) {
-        let wheelPos = scenery.chair.chair_wheels.children[0];
-        let distance = 2;
-        let vec = new THREE.Vector3();
-        let vec2 = new THREE.Vector3();
-        wheelPos.getWorldPosition(vec);
-        wheelPos.getWorldDirection(vec2);
-        scenery.camera.position.x = vec.x + vec2.x *distance ;
-        scenery.camera.position.y = vec.y + vec2.y *distance;
-        scenery.camera.position.z = vec.z + vec2.z*distance;
-        scenery.camera.lookAt(vec);
-    }
-*/
-/////////////////////////////////////////////
-
-
-    setTimeout(function () {
-        requestAnimationFrame(animate);
-    }, 1000 / 60);
+    requestAnimationFrame(animate);
+    
 
     scenery.render();
 
     }
 
+
+
     function onResize() {
 
+    	if(scenery.currCamera instanceof THREE.OrthographicCamera){
+	        let aspect = window.innerWidth / window.innerHeight;
+	        scenery.currCamera.left   = -scenery.frustumSize * aspect / 2;
+	        scenery.currCamera.right  = scenery.frustumSize * aspect / 2;
+	        scenery.currCamera.top    = scenery.frustumSize / 2;
+	        scenery.currCamera.bottom = -scenery.frustumSize / 2;
+	        scenery.currCamera.updateProjectionMatrix();
+	        scenery.renderer.setSize( window.innerWidth, window.innerHeight );
+	    }
 
-        // let aspect = window.innerWidth / window.innerHeight;
-
-
-
-        // scenery.camera.left   = -scenery.frustumSize * aspect / 2;
-        // scenery.camera.right  = scenery.frustumSize * aspect / 2;
-        // scenery.camera.top    = scenery.frustumSize / 2;
-        // scenery.camera.bottom = -scenery.frustumSize / 2;
-
-        scenery.camera.aspect = window.innerWidth / window.innerHeight;
-        scenery.camera.updateProjectionMatrix();
-        scenery.renderer.setSize( window.innerWidth, window.innerHeight );
-
-        // renderer.setSize(window.innerWidth, window.innerHeight);
-        //
-        // if (window.innerHeight > 0 && window.innerWidth > 0) {
-        //     camera.aspect = window.innerWidth / window.innerHeight;
-        //     camera.updateProjectionMatrix();
-        // }
+	    if (scenery.currCamera instanceof THREE.PerspectiveCamera) {
+    		scenery.renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    		if (window.innerHeight > 0 && window.innerWidth > 0) {
+      		  scenery.camera.aspect = window.innerWidth / window.innerHeight;
+        	  scenery.camera.updateProjectionMatrix();
+    		}
+	    }
 
     }
+
+
 
     function onKeyUp(e){
         switch (e.keyCode) {
             case 38:
+                speedFactor = speedFactor+0.25;
+                console.log(speedFactor);
                 buttonUP = false;
                 break;
             case 40:
+                speedFactor = speedFactor-0.25;
+                console.log(speedFactor);
                 buttonDOWN = false;
                 break;
             case 39:
@@ -213,6 +218,7 @@ function animate() {
 
         case  51: // 3
             scenery.currCamera = scenery.closeCamera;
+            scenery.currCamera.lookAt(new THREE.Vector3(0,0,0));
         break;
 
         }

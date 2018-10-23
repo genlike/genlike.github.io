@@ -55,21 +55,22 @@ class Scenery extends THREE.Scene{
 
             b.position.add(new THREE.Vector3(randomX, this.poolTable.wallHeight/2, randomZ));
 
-            //Verificar se acabamos de mover uma bola para dentro de outra, se sim então dar nova posição
-            this.balls.forEach(ball => {
-                do {
-                    let rDist = (ball.radius + b.radius)**2;
-                    let ballDist = (b.position.x - ball.position.x)**2 + (b.position.z - ball.position.z)**2;
-                    if (rDist < ballDist){
-                        break;
-                    }
-                    randomZ = getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-                    randomX = getRandom(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-                    b.position.x = randomX;
-                    b.position.z = randomZ;
-                }while (true)
+            let collided;
+            do{
+                collided = false;
+                randomZ = getRandom(-tableWidth / 2 + this.poolTable.wallWidth + this.poolTable.wallHeight / 2, tableWidth / 2 - this.poolTable.wallWidth - this.poolTable.wallHeight / 2);
+                randomX = getRandom(-tableWidth / 4 + this.poolTable.wallWidth + this.poolTable.wallHeight / 2, tableWidth / 4 - this.poolTable.wallWidth - this.poolTable.wallHeight / 2);
+                b.position.x = randomX;
+                b.position.z = randomZ;
 
-            });
+                this.balls.forEach(ball => {
+                    let rDist = (ball.radius + b.radius) ** 2;
+                    let ballDist = (b.position.x - ball.position.x) ** 2 + (b.position.z - ball.position.z) ** 2;
+                    if (rDist >= ballDist) {
+                        collided = true; //Testar break com exception. @see [https://stackoverflow.com/questions/2641347/short-circuit-array-foreach-like-calling-break]
+                    }
+                });
+            }while(collided);
 
 
             this.balls.push(b);
@@ -77,18 +78,20 @@ class Scenery extends THREE.Scene{
     }
 
 
-      /*  let a = new Ball(0,this.poolTable.wallHeight/2,0,this.poolTable.wallHeight/2,colors[0]);
-        let b = new Ball(0,this.poolTable.wallHeight/2,0,this.poolTable.wallHeight/2,colors[1]);
-        a.userData.Speed = new THREE.Vector3(0,0,-10);
+
+/*
+
+        let a = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[0]);
+        let b = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[1]);
+        a.userData.Speed = new THREE.Vector3(0,0,5);
         b.userData.Speed = new THREE.Vector3(0,0,10);
-        a.position.add(new THREE.Vector3(0,0,20));
-        b.position.add(new THREE.Vector3(0,0,-20));
+        a.position.add(new THREE.Vector3(0,this.poolTable.wallHeight/2,20));
+        b.position.add(new THREE.Vector3(0,this.poolTable.wallHeight/2,-20));
         this.balls.push(a);
         this.add(this.balls[0]);
         this.balls.push(b);
-        this.add(this.balls[1]);*/
-
-
+        this.add(this.balls[1]);
+*/
 
     }
 
@@ -122,10 +125,10 @@ class Scenery extends THREE.Scene{
     createCloseUpCamera(){
         this.closeCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-        this.balls[0].add(this.closeCamera);
-        this.closeCamera.position.x = 15;
-        this.closeCamera.position.y = 25;
-        this.closeCamera.position.z = 15;
+        this.balls[1].add(this.closeCamera);
+        this.closeCamera.position.z = 10;
+        this.closeCamera.position.x = 10;
+        this.closeCamera.position.y = 10;
 
 
     }

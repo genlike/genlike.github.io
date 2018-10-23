@@ -4,7 +4,7 @@ class PoolTable extends GraphicalObject {
 		this.width = width;
 		this.length = width/2;
 		this.wallWidth = 1;
-		this.wallHeight = Math.sqrt(this.wallWidth**2 + this.length**2)/10;
+		this.wallHeight = Math.sqrt(this.width**2 + this.length**2)/10;
 		this.addTableFloor(this,x,y-1,z);
 		this.addTableBigWall(this, x - this.length/2+this.wallWidth/2, y+this.wallHeight/2, z);
 		this.addTableBigWall(this, x + this.length/2-this.wallWidth/2, y+this.wallHeight/2, z);
