@@ -148,7 +148,8 @@ class Scenery extends THREE.Scene {
         this.add(this.floor);
 
         this.createWalls();
-		this.ball = new Ball(0,10,30);
+		this.ball = new Ball(0,0,0);
+		this.ball.position.add( new THREE.Vector3(0,10,30));
 		this.add(this.ball);
 
         let light = new THREE.PointLight(0xffffff, 2);

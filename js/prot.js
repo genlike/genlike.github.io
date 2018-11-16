@@ -1,6 +1,7 @@
 var scenery;
 
 var buttonUP, buttonDOWN, buttonLEFT, buttonRIGHT;
+var moveBall = false;
 
 var speedFactor = 1;
 
@@ -30,8 +31,9 @@ function animate() {
 
     let delta = scenery.clock.getDelta();
 	
-    //Os eixos verde e azul da imagem do stor nao correspondem aos eixos do tree js .-. ptt fiz assim, mas idk 
-    scenery.ball.applyMovement(scenery.ball.updateMovement(delta));
+    //Os eixos verde e azul da imagem do stor nao correspondem aos eixos do tree js .-. ptt fiz assim, mas idk
+	if (moveBall) scenery.ball.applyMovement(scenery.ball.updateMovement(delta));
+	
 
 	if(buttonUP){
     }
@@ -122,6 +124,10 @@ function onKeyDown(e) {
         case 37:
             buttonLEFT = true;
             break;
+		case 98:
+		case 66:
+			moveBall = !moveBall;
+			break;
         case 65: //A
         case 97: //a
             scenery.traverse(function (node) {
