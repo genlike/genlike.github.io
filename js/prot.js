@@ -29,11 +29,11 @@ function animate() {
     'use strict';
 
     let delta = scenery.clock.getDelta();
-	scenery.ball.applyMovement(scenery.ball.updateMovement(delta));
+	
     //Os eixos verde e azul da imagem do stor nao correspondem aos eixos do tree js .-. ptt fiz assim, mas idk 
+    scenery.ball.applyMovement(scenery.ball.updateMovement(delta));
 
 	if(buttonUP){
-        // scenery.plane.rotateOnBlue("up");
     }
     if (buttonDOWN){
         // scenery.plane.rotateOnBlue("down");
