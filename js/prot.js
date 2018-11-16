@@ -6,157 +6,97 @@ var speedFactor = 1;
 
 var wheelCamera = false;
 
-var lvlUpInterval = 60000;
+function getRandom(min, max) {
+    'use strict'
+
+    let r = Math.random();
+    let interval = (max - min)
+    interval = interval * r;
+    return min + interval;
+}
 
 
-function init(){
+
+function init() {
     scenery = new Scenery();
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup",onKeyUp);
-    /*Acho que nao podemos ter dois eventos de resize, mas tambem nao podemos passar argumentos na funcao, como fazer?*/
+    window.addEventListener("keyup", onKeyUp);
     window.addEventListener("resize", onResize);
-    //setLvlUp();
 }
 
-
-
-function lvlup(){
-    scenery.balls.forEach(ball => {
-            ball.userData.Speed.multiplyScalar(1.5);
-        }); 
-    setTimeout(function() {
-        lvlup();    
-    }, lvlUpInterval);
-}
 
 function animate() {
     'use strict';
 
     let delta = scenery.clock.getDelta();
-    scenery.tempballs = scenery.balls.slice(1);
-    scenery.balls.forEach(ball => {
-       let newPosition = ball.updateMovement(delta);
-        ball.applyRotation(delta);
+	scenery.ball.applyMovement(scenery.ball.updateMovement(delta));
+    //Os eixos verde e azul da imagem do stor nao correspondem aos eixos do tree js .-. ptt fiz assim, mas idk 
 
-       /*Walls*/
-       if (newPosition.x+ball.radius > scenery.poolTable.length/2 - scenery.poolTable.wallWidth/2 ||
-        newPosition.x - ball.radius  < -scenery.poolTable.length/2 + scenery.poolTable.wallWidth/2){
-            ball.userData.Speed.x = -ball.userData.Speed.x;
-            newPosition = ball.oldPosition;
-        }
-
-      if (newPosition.z+ball.radius > scenery.poolTable.width/2 - scenery.poolTable.wallWidth/2 || 
-        newPosition.z - ball.radius < -scenery.poolTable.width/2 + scenery.poolTable.wallWidth/2){
-        
-            ball.userData.Speed.z = -ball.userData.Speed.z;
-            newPosition = ball.oldPosition;
-        }
-
-     /*COLISIONS WITH OTHER BALLS*/
-      scenery.tempballs.forEach(tempball => {
-        let rDist = (ball.radius + tempball.radius)**2;
-        let ballDist = (newPosition.x - tempball.position.x)**2 + (newPosition.z - tempball.position.z)**2
-        
-        if (rDist >= ballDist){
-
-            let SpeedInitialB1 = ball.userData.Speed.clone();
-            let subSpeeds = ball.userData.Speed.clone();
-            let SpeedInitialB2 = tempball.userData.Speed.clone();
-
-            subSpeeds.sub(SpeedInitialB2);
-
-            let subCenters = new THREE.Vector3(ball.position.x,ball.position.y,ball.position.z);
-            subCenters.sub(tempball.position);
-
-            let squaredLength = subCenters.lengthSq();
-
-            let a = (subSpeeds.dot(subCenters))/squaredLength;
-            
-            subCenters.multiplyScalar(a);
-
-            let SpeedFinalB1 = SpeedInitialB1.clone();
-            SpeedFinalB1.sub(subCenters);
-
-
-
-            ball.userData.Speed = SpeedFinalB1;
-            let subCenters2 = new THREE.Vector3(tempball.position.x,tempball.position.y,tempball.position.z);
-            subCenters2.sub(ball.position);
-            subCenters2.multiplyScalar(a);
-
-            let SpeedFinalB2 = SpeedInitialB2.clone();
-            SpeedFinalB2.sub(subCenters2);
-
-            tempball.userData.Speed = SpeedFinalB2;
-                
-            
-        }
-    });
-   
-      scenery.tempballs.shift();
-      ball.applyMovement(newPosition);
-
-    });
-
+	if(buttonUP){
+        // scenery.plane.rotateOnBlue("up");
+    }
+    if (buttonDOWN){
+        // scenery.plane.rotateOnBlue("down");
+    }
+    if (buttonLEFT){
+        // scenery.plane.rotateOnGreen("left");
+    }
+    if (buttonRIGHT) {
+        // scenery.plane.rotateOnGreen("right");
+    }
 
     requestAnimationFrame(animate);
-    
-
+	//scenery.controls.update();
     scenery.render();
 
+
+
+}
+
+
+function onResize() {
+
+    if (scenery.currCamera instanceof THREE.OrthographicCamera) {
+        let aspect = window.innerWidth / window.innerHeight;
+        scenery.currCamera.left = -scenery.frustumSize * aspect / 2;
+        scenery.currCamera.right = scenery.frustumSize * aspect / 2;
+        scenery.currCamera.top = scenery.frustumSize / 2;
+        scenery.currCamera.bottom = -scenery.frustumSize / 2;
+        scenery.currCamera.updateProjectionMatrix();
+        scenery.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-
-
-    function onResize() {
-
-    	if(scenery.currCamera instanceof THREE.OrthographicCamera){
-	        let aspect = window.innerWidth / window.innerHeight;
-	        scenery.currCamera.left   = -scenery.frustumSize * aspect / 2;
-	        scenery.currCamera.right  = scenery.frustumSize * aspect / 2;
-	        scenery.currCamera.top    = scenery.frustumSize / 2;
-	        scenery.currCamera.bottom = -scenery.frustumSize / 2;
-	        scenery.currCamera.updateProjectionMatrix();
-	        scenery.renderer.setSize( window.innerWidth, window.innerHeight );
-	    }
-
-	    if (scenery.currCamera instanceof THREE.PerspectiveCamera) {
-    		scenery.renderer.setSize(window.innerWidth, window.innerHeight);
-    
-    		if (window.innerHeight > 0 && window.innerWidth > 0) {
-      		  scenery.camera.aspect = window.innerWidth / window.innerHeight;
-        	  scenery.camera.updateProjectionMatrix();
-    		}
-	    }
-
-    }
-
-
-
-    function onKeyUp(e){
-        switch (e.keyCode) {
-            case 38:
-                speedFactor = speedFactor+0.25;
-                console.log(speedFactor);
-                buttonUP = false;
-                break;
-            case 40:
-                speedFactor = speedFactor-0.25;
-                console.log(speedFactor);
-                buttonDOWN = false;
-                break;
-            case 39:
-                buttonRIGHT = false;
-                break;
-            case 37:
-                buttonLEFT = false;
-                break;
+    if (scenery.currCamera instanceof THREE.PerspectiveCamera) {
+        if (window.innerHeight > 0 && window.innerWidth > 0) {
+            scenery.currCamera.aspect = window.innerWidth / window.innerHeight;
+            scenery.currCamera.updateProjectionMatrix();
+            scenery.renderer.setSize(window.innerWidth, window.innerHeight);
         }
     }
 
+}
 
-    function onKeyDown(e) {
-        'use strict';
+
+function onKeyUp(e) {
+    switch (e.keyCode) {
+        case 38:
+            buttonUP = false;
+            break;
+        case 40:
+            buttonDOWN = false;
+            break;
+        case 39:
+            buttonRIGHT = false;
+            break;
+        case 37:
+            buttonLEFT = false;
+            break;
+    }
+}
+
+
+function onKeyDown(e) {
+    'use strict';
 
     /*
     Arrow Type  Alt Code
@@ -169,7 +109,7 @@ function animate() {
     3           51
     4           52
     */
-        switch (e.keyCode) {
+    switch (e.keyCode) {
         case 38:
             buttonUP = true;
             break;
@@ -194,47 +134,131 @@ function animate() {
         case 83:  //S
         case 69:  //E
         case 101: //e
-            scenery.traverse(function (node) {
-                if(node instanceof Ball){
-                    node.traverse(function (e){
-                        if (e instanceof THREE.AxisHelper) {
-                            e.visible = !e.visible;
-                        }
-                    });
-                }
-            });
-        break;
+            //     scenery.traverse(function (node) {
+            //         if(node instanceof Ball){
+            //             node.traverse(function (e){
+            //                 if (e instanceof THREE.AxisHelper) {
+            //                     e.visible = !e.visible;
+            //                 }
+            //             });
+            //         }
+            //     });
+            break;
 
         case  49: // 1
-            scenery.currCamera = scenery.camera;
-            scenery.moveCamera(0,100,0);
-        break;
+            scenery.slightToggle(1);
+            break;
 
         case  50: // 2
-            scenery.currCamera = scenery.Pcamera;
-            scenery.currCamera.lookAt(scenery.position);
-            wheelCamera = false;
-        break;
 
+            scenery.slightToggle(2);
+
+            break;
         case  51: // 3
-            scenery.currCamera = scenery.closeCamera;
-            scenery.currCamera.lookAt(new THREE.Vector3(0,0,0));
-        break;
+            scenery.slightToggle(3);
 
-        }
+            break;
+
+        case  52: //4
+            scenery.slightToggle(4);
+            break;
+
+        case  53: // 5
+
+            scenery.currCamera = scenery.Pcamera;
+            scenery.currCamera.position.x = -100;
+            scenery.currCamera.position.y = 50;
+            scenery.currCamera.position.z = 60;
+
+            scenery.currCamera.lookAt(new THREE.Vector3(0, -40, 0));
+            onResize();
+            break;
+
+        case  54: // 6
+            console.log("6");
+            scenery.currCamera = scenery.camera;
+            scenery.moveCamera(0, 0, 200);
+            scenery.currCamera.lookAt(new THREE.Vector3(0, 0, 0));
+            onResize();
+            break;
+
+        case  55: // 7
+
+            scenery.currCamera = scenery.camera;
+            scenery.moveCamera(0, 200, 0);
+            scenery.currCamera.lookAt(new THREE.Vector3(0, 0, 0));
+            onResize();
+            break;
+
+        case  56: //8
+
+            scenery.currCamera = scenery.camera;
+            scenery.moveCamera(-200, 0, 0);
+            scenery.currCamera.lookAt(new THREE.Vector3(0, 0, 0));
+            onResize();
+            break;
+
+        case 110: //n
+        case 78: //N
+
+        	if(scenery.directionalLight.intensity === 0){
+        		scenery.directionalLight.intensity = scenery.defaultIntensity_d;
+        	}
+        	else{
+        		scenery.directionalLight.intensity = 0;
+        	}
+        	break;
+
+        case 108: //l
+        case 76: //L
+        	// scenery.plane.flipMaterial();
+/*
+        	scenery.traverse(function (node) {
+                if (node instanceof THREE.Mesh) { 
+        			if(node.material instanceof THREE.MeshPhongMaterial){
+        				node.material = new THREE.MeshBasicMaterial({color: node.material.color});
+        			}
+        			else if (node.material instanceof THREE.MeshLambertMaterial){
+        				node.material = new THREE.MeshBasicMaterial({color: node.material.color});
+        			}
+
+         			else if (node.material instanceof THREE.MeshStandardMaterial){
+        				node.material = new THREE.MeshBasicMaterial({color: node.material.color});       	
+        			}		
+
+        			else if (node.material instanceof THREE.MeshBasicMaterial){
+        				node.material = new THREE.MeshStandardMaterial({color: node.material.color});
+        			}
+                }
+            });
+            */
+            break;
+
+        case 103: //g
+        case 71: //G
+            // scenery.traverse(function (node) {
+            //     if (node instanceof THREE.Mesh) {
+        		// 	if(node.material instanceof THREE.MeshPhongMaterial){
+        		// 		node.material = new THREE.MeshLambertMaterial({color: node.material.color});
+        		// 		//console.log("Sou Lambert de cor azul")
+            //
+        		// 	}
+            //
+        		// 	else if (node.material instanceof THREE.MeshStandardMaterial){
+        		// 		node.material = new THREE.MeshPhongMaterial({color: node.material.color});
+            //
+        		// 	}
+            //
+        		// 	else if (node.material instanceof THREE.MeshLambertMaterial){
+        		// 		node.material = new THREE.MeshPhongMaterial({color: node.material.color});
+        		// 		//console.log("Sou Phong de cor branca")
+        		// 	}
+        		// 	else if (node.material instanceof THREE.MeshBasicMaterial) {
+        		// 		node.material = new THREE.MeshPhongMaterial({color: node.material.color});
+        		// 	}
+            //     }
+            // });
+            break;
     }
+}
 
-    function changeToWheelCamera(){
-        'use strict'
-        let cam = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
-        return cam;
-    }
-
-    function getRandom(min,max){
-        'use strict'
-
-        let r = Math.random();
-        let interval = (max - min)
-        interval = interval*r;
-        return min+interval;
-    }

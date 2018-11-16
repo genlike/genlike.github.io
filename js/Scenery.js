@@ -1,9 +1,8 @@
-class Scenery extends THREE.Scene{
+class Scenery extends THREE.Scene {
 
-    constructor(){
+    constructor() {
         super();
         this.frustumSize = 150;
-
         this.renderer = new THREE.WebGLRenderer({
             antialias: true
         });
@@ -12,94 +11,166 @@ class Scenery extends THREE.Scene{
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.renderer.domElement);
 
+        this.background = new THREE.Color(0x232323);
+
         this.createScene();
         this.createCamera();
         this.createPerspectiveCamera();
-        this.createCloseUpCamera();
-        this.currCamera = this.camera;
+        // this.createSpotLights();
+        this.createDirectionalLight();
+        this.currCamera = this.Pcamera;
+		this.createCameraControl();
+    }
+	
+	
+	createCameraControl(){
+		this.controls = new THREE.OrbitControls( this.currCamera);
+	}
+
+	
+
+    createChessBoard() {
+
+        let geo = new THREE.BoxGeometry(200, 5, 200);
+
+        geo.normalsNeedUpdate = true;
+        let mat = new THREE.MeshPhongMaterial({color: 0x303030});
+
+        let texture = new THREE.TextureLoader().load("textures/CG1.jpg");
+        // texture.wrapS = THREE.RepeatWrapping;
+        // texture.wrapT = THREE.RepeatWrapping;
+        geo.faceVertexUvs[0] = [];
+        for (let i = 0; i < geo.faces.length; i++) {
+            geo.faceVertexUvs[0].push([
+                new THREE.Vector2(0, 0),
+                new THREE.Vector2(0, 0),
+                new THREE.Vector2(0, 0),
+            ]);
+        }
+        // Map texture to upper face
+        geo.faceVertexUvs[0][4][0].set(0, 1);
+        geo.faceVertexUvs[0][4][1].set(0, 0);
+        geo.faceVertexUvs[0][4][2].set(1, 1);
+        geo.faceVertexUvs[0][5][0].set(0, 0);
+        geo.faceVertexUvs[0][5][1].set(1, 0);
+        geo.faceVertexUvs[0][5][2].set(1, 1);
+
+        texture.minFilter = THREE.LinearFilter;
+        mat.map = texture;
+
+        mat.shininess = 30;
+        mat.flatShading = THREE.SmoothShading;
+        mat.needsUpdate = true;
+        geo.computeFaceNormals();
+
+        let obj = new THREE.Mesh(geo, mat);
+        return obj;
     }
 
-    getRandom(min,max){
-        'use strict'
+    createFloor() {
 
-        let r = Math.random();
-        let interval = (max - min)
-        interval = interval*r;
-        return min+interval;
+        let geo = new THREE.BoxGeometry(530, 1, 530);
+        let mat = new THREE.MeshPhongMaterial({color: 0x727171});
+        mat.shininess = 30;
+        mat.flatShading = THREE.SmoothShading;
+        mat.needsUpdate = true;
+        geo.computeFaceNormals();
+        let obj = new THREE.Mesh(geo, mat);
+        obj.position.add(new THREE.Vector3(0, -3, 0));
+        return obj;
+
+
     }
 
+    createWalls() {
+
+        let wallWidth = 400;
+        let wallHeight = 330;
+        let wallDepth = 1;
+        let wallDistance = 200;
+
+        // WALL 1
+        let geo = new THREE.BoxGeometry(wallWidth, wallHeight, wallDepth);
+        let mat = new THREE.MeshPhongMaterial({color: 0x383838});
+        mat.shininess = 30;
+        mat.flatShading = THREE.SmoothShading;
+        mat.needsUpdate = true;
+        geo.computeFaceNormals();
+        let obj = new THREE.Mesh(geo, mat);
+        obj.position.add(new THREE.Vector3(0, 0, wallDistance));
+        this.add(obj);
+
+        // WALL 2
+        let geo2 = new THREE.BoxGeometry(wallDepth, wallHeight, wallWidth);
+        let mat2 = new THREE.MeshPhongMaterial({color: 0x383838});
+        mat2.shininess = 30;
+        mat2.flatShading = THREE.SmoothShading;
+        mat2.needsUpdate = true;
+        geo.computeFaceNormals();
+        let obj2 = new THREE.Mesh(geo2, mat2);
+        obj2.position.add(new THREE.Vector3(wallDistance, 0, 0));
+        this.add(obj2);
+
+        // WALL 3
+        let geo3 = new THREE.BoxGeometry(wallWidth, wallHeight, wallDepth);
+        let mat3 = new THREE.MeshPhongMaterial({color: 0x383838});
+        mat3.shininess = 30;
+        mat3.flatShading = THREE.SmoothShading;
+        mat3.needsUpdate = true;
+        geo3.computeFaceNormals();
+        let obj3 = new THREE.Mesh(geo3, mat3);
+        obj3.position.add(new THREE.Vector3(0, 0, -wallDistance));
+        this.add(obj3);
+
+
+        // WALL 4
+        let geo4 = new THREE.BoxGeometry(wallDepth, wallHeight, wallWidth);
+        let mat4 = new THREE.MeshPhongMaterial({color: 0x383838});
+        mat4.shininess = 30;
+        mat4.flatShading = THREE.SmoothShading;
+        mat4.needsUpdate = true;
+        geo.computeFaceNormals();
+        let obj4 = new THREE.Mesh(geo4, mat4);
+        obj4.position.add(new THREE.Vector3(-wallDistance, 0, 0));
+
+        this.add(obj4);
+
+
+    }
 
 
     createScene() {
-        //General Arguments (z width, x lenght)
-        let numberOfBalls = 10;
-        let tableWidth = 150;
 
-        //table of colors
-        let colors = [
-            0xff0000,0x880000,0xffff00,0x808000,0xffffff,
-            0x008000,0x00ffff,0x008080,0x0000ff,0xFF00FF
-        ]
+        this.board = this.createChessBoard();
+        this.add(this.board);
+        this.test = this.board;
+        this.floor = this.createFloor();
+        this.add(this.floor);
 
-        //this.add(new THREE.AxisHelper(40));
+        this.createWalls();
+		this.ball = new Ball(0,10,30);
+		this.add(this.ball);
 
-        this.poolTable = new PoolTable(0,0,0,tableWidth);
-        this.balls = [];
+        let light = new THREE.PointLight(0xffffff, 2);
+        light.position.set(0, 100, 0);
+        light.add(new THREE.AxesHelper(10));
+        this.add(light)
 
-        this.add(this.poolTable);
-
-        for(let i = 0; i<numberOfBalls; i++){
-            let randomZ = getRandom(-tableWidth/2+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/2-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-            let randomX = getRandom(-tableWidth/4+this.poolTable.wallWidth+this.poolTable.wallHeight/2,tableWidth/4-this.poolTable.wallWidth-this.poolTable.wallHeight/2);
-            let b = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[i]);
-
-            b.position.add(new THREE.Vector3(randomX, this.poolTable.wallHeight/2, randomZ));
-
-            let collided;
-            do{
-                collided = false;
-                randomZ = getRandom(-tableWidth / 2 + this.poolTable.wallWidth + this.poolTable.wallHeight / 2, tableWidth / 2 - this.poolTable.wallWidth - this.poolTable.wallHeight / 2);
-                randomX = getRandom(-tableWidth / 4 + this.poolTable.wallWidth + this.poolTable.wallHeight / 2, tableWidth / 4 - this.poolTable.wallWidth - this.poolTable.wallHeight / 2);
-                b.position.x = randomX;
-                b.position.z = randomZ;
-
-                this.balls.forEach(ball => {
-                    let rDist = (ball.radius + b.radius) ** 2;
-                    let ballDist = (b.position.x - ball.position.x) ** 2 + (b.position.z - ball.position.z) ** 2;
-                    if (rDist >= ballDist) {
-                        collided = true; //Testar break com exception. @see [https://stackoverflow.com/questions/2641347/short-circuit-array-foreach-like-calling-break]
-                    }
-                });
-            }while(collided);
-
-
-            this.balls.push(b);
-            this.add(this.balls[i]);
     }
 
+    moveCamera(x, y, z) {
 
-
-/*
-
-        let a = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[0]);
-        let b = new Ball(0,0,0,this.poolTable.wallHeight/2,colors[1]);
-        a.userData.Speed = new THREE.Vector3(0,0,5);
-        b.userData.Speed = new THREE.Vector3(0,0,10);
-        a.position.add(new THREE.Vector3(0,this.poolTable.wallHeight/2,20));
-        b.position.add(new THREE.Vector3(0,this.poolTable.wallHeight/2,-20));
-        this.balls.push(a);
-        this.add(this.balls[0]);
-        this.balls.push(b);
-        this.add(this.balls[1]);
-*/
-
+        this.currCamera.position.x = x;
+        this.currCamera.position.y = y;
+        this.currCamera.position.z = z;
+        this.currCamera.lookAt(this.position);
     }
 
 
     createCamera() {
 
-        let  aspect = window.innerWidth / window.innerHeight;
-        this.camera = new THREE.OrthographicCamera( this.frustumSize * aspect / - 2, this.frustumSize * aspect / 2, this.frustumSize / 2, this.frustumSize / - 2, 1, 1000 );
+        let aspect = window.innerWidth / window.innerHeight;
+        this.camera = new THREE.OrthographicCamera(this.frustumSize * aspect / -2, this.frustumSize * aspect / 2, this.frustumSize / 2, this.frustumSize / -2, 1, 1000);
 
         // camera = new THREE.OrthographicCamera( 45 / - 2, 45 / 2, 45 / 2, 45 / - 2, 1, 2000); //Ainda nao estao as 3 camaras,
 
@@ -114,34 +185,48 @@ class Scenery extends THREE.Scene{
 
     createPerspectiveCamera() {
 
-        this.Pcamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
+        this.Pcamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 
-        this.Pcamera.position.x = 100;
-        this.Pcamera.position.y = 100;
-        this.Pcamera.position.z = 100;
-
-    }
-
-    createCloseUpCamera(){
-        this.closeCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000 );
-
-        this.balls[1].add(this.closeCamera);
-        this.closeCamera.position.z = 10;
-        this.closeCamera.position.x = 10;
-        this.closeCamera.position.y = 10;
-
+        this.Pcamera.position.x = -150;
+        this.Pcamera.position.y = 150;
+        this.Pcamera.position.z = 0;
+        this.Pcamera.lookAt(new THREE.Vector3(0, 0, 0));
 
     }
+
 
     render() {
 
         this.renderer.render(this, this.currCamera);
 
     }
-    moveCamera(x,y,z){
-        this.camera.position.x = x;
-        this.camera.position.y = y;
-        this.camera.position.z = z;
-        this.camera.lookAt(this.position);
+
+    moveCamera(x, y, z) {
+        this.currCamera.position.x = x;
+        this.currCamera.position.y = y;
+        this.currCamera.position.z = z;
+        this.currCamera.lookAt(this.position);
+    }
+
+    createDirectionalLight() {
+
+        this.defaultIntensity_d = 2;
+        this.directionalLight = new THREE.DirectionalLight(0xffffff, this.defaultIntensity_d);
+
+        this.add(this.directionalLight);
+        this.directionalLight.position.set(-2 * this.slightBasePos, 2 * this.slightHeight, 2 * this.slightBasePos);
+
+        let axisHelper = new THREE.AxesHelper(5);
+        this.directionalLight.add(axisHelper);
+
+    }
+
+    slightToggle(i) {
+        if (this.slights[i - 1].intensity === 0) {
+            this.slights[i - 1].intensity = this.defaultIntensity_s;
+        } else {
+            this.slights[i - 1].intensity = 0;
+        }
     }
 }
+
