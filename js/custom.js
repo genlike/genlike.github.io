@@ -3,6 +3,7 @@ const dataPT = {
         {
             'id': 'PROJPAP',
             'local': 'EDUEPSM',
+            'titulo': 'PAP',
             'areas': ['ARBACK', 'ARFRONT', 'ARDB', 'ARDESK'],
             'tecnologias': ['TECVB','TECMSSQL', 'TECPHP'],
             'descricao': 'Fiz a PAP',
@@ -10,6 +11,7 @@ const dataPT = {
         {
             'id': 'PROJTMS',
             'local': 'EXDHLAL',
+            'titulo': 'TMS Interfaces',
             'areas': ['ARDESK', 'ARDB'],
             'tecnologias': ['TECVB', 'TECXML', 'TECDBINF'],
             'descricao': 'Fiz desenvolvimentos no TMS Interfaces',
@@ -17,6 +19,7 @@ const dataPT = {
         {
             'id': 'PROJINFOLG',
             'local': 'EXDHLAL',
+            'titulo': 'Infolog Extender',
             'areas': ['ARDESK', 'ARDB'],
             'tecnologias': ['TECVB6','TECDBINF'],
             'descricao': 'Fiz desenvolvimentos no Infolog Extender',
@@ -24,6 +27,7 @@ const dataPT = {
         {
             'id': 'PROJREDPRAIRIE',
             'local': 'EXDHLAL',
+            'titulo': 'RedPrairie',
             'areas': ['ARDB'],
             'tecnologias': ['TECORAC'],
             'descricao': 'Fiz reports no RedPrairie',
@@ -31,6 +35,7 @@ const dataPT = {
         {
             'id': 'PROJPHC',
             'local': 'EXDHLAL',
+            'titulo': 'PHC',
             'areas': ['ARDB'],
             'tecnologias': ['TECMSSQL'],
             'descricao': 'Fiz reports no PHC',
@@ -38,20 +43,23 @@ const dataPT = {
         {
             'id': 'PROJXBOX',
             'local': 'EXADECXBOX',
-            'areas': [''],
-            'tecnologias': [''],
+            'titulo': 'German Callcenter',
+            'areas': [],
+            'tecnologias': [],
             'descricao': 'Yo je parle german',
         },
         {
             'id': 'PROJWS',
             'local': 'EDISTOE',
-            'areas': [''],
+            'titulo': 'Workshop Python/Assembly',
+            'areas': [],
             'tecnologias': ['TECPYTH', 'TECASSEMB'],
             'descricao': 'Formação de alunos nas linguagens de Python e Assembly',
         },
         {
             'id': 'PROJBANCS',
             'local': 'EDISTOE',
+            'titulo': 'Banco de Saude',
             'areas': ['ARBACK', 'ARFRONT', 'ARAG'],
             'tecnologias': ['TECPYTH', 'TECDJANGO', 'TECJIR', 'TECGCLOUD', 'TECGIT'],
             'descricao': 'Yo Startup failed but tried',
@@ -59,6 +67,7 @@ const dataPT = {
         {
             'id': 'PROJNEIIST',
             'local': 'EDISTOE',
+            'titulo': 'NEIIST',
             'areas': [],
             'tecnologias': [],
             'descricao': 'Fui Vice Presi, im salty',
@@ -66,13 +75,15 @@ const dataPT = {
         {
             'id': 'PROJTESE',
             'local': 'EDISTOE',
-            'areas': ['ARBACK', 'ARFRONT', 'ARCLOUD', 'ARCONT', 'ARDB'],
-            'tecnologias': ['TECPYTH', 'TECDJANGO', 'TECJIR', 'TECGCLOUD', 'TECGIT'],
+            'titulo': 'Tese Mestrado',
+            'areas': ['ARBACK', 'ARFRONT', 'ARCONT', 'ARDB'],
+            'tecnologias': ['TECTSCRIPT', 'TECJSCRIPT','TECDOCKER' ,'TECGIT', 'TECBASH'],
             'descricao': 'Yo Startup failed but tried',
         },
         {
             'id': 'PROJWCREP',
             'local': 'EXSEMLIS',
+            'titulo': 'WC Reporter',
             'areas': ['ARBACK', 'ARFRONT'],
             'tecnologias': ['TECCSHARP', 'TECNETCORE','TECANDR', 'TECHTCSS', 'TECGIT'],
             'descricao': 'Build WC Reporter',
@@ -80,6 +91,7 @@ const dataPT = {
         {
             'id': 'PROJCSIKEA',
             'local': 'EXSEMLIS',
+            'titulo': 'IKEA Smart House',
             'areas': ['ARIOT'],
             'tecnologias': ['TECRASP', 'TECPYTH'],
             'descricao': 'Yo casa smart',
@@ -87,6 +99,7 @@ const dataPT = {
         {
             'id': 'PROJCONTPEP',
             'local': 'EXSEMLIS',
+            'titulo': 'Smart Camera',
             'areas': ['ARIOT', 'ARFRONT', 'ARBACK'],
             'tecnologias': ['TECARM', 'TECC', 'TECGIT'],
             'descricao': 'Yo contar pessoas com uma camara que nao funciona',
@@ -94,6 +107,7 @@ const dataPT = {
         {
             'id': 'PROJFILRAPID',
             'local': 'EXSEMLIS',
+            'titulo': 'Fast Line Continente',
             'areas': ['ARIOT', 'ARFRONT', 'ARBACK'],
             'tecnologias': ['TECESP86','TECNETCORE', 'TECC', 'TECGIT'],
             'descricao': 'Yo reiventei a fila unica do continet, cause swag&rizz',
@@ -101,6 +115,7 @@ const dataPT = {
         {
             'id': 'PROJTRLGCS',
             'local': 'EXMORPHOME',
+            'titulo': 'Legacy code transformation',
             'areas': ['ARFRONT', 'ARBACK'],
             'tecnologias': ['TECCSHARP','TECNETCORE', 'TECORAC', 'TECGIT'],
             'descricao': 'Transformar Oracle Forms para C#',
@@ -109,20 +124,24 @@ const dataPT = {
     'educacao': [
         {
             'id': 'EDUEPSM',
-            'escola': 'Escola Profissional',
-            'curso': 'Técnico Informática e Gestão',
+            'escola': 'Escola Profissional Salvaterra de Magos',
+            'curso': 'Information Technology and Management Technician',
             'campi': 'N/A',
+            'dataini' : 'Sep-2009',
+            'datafin' : 'Jun-2011',
             'img': 'assets/img/gallery-75-10.jpg',
-            'local': 'Salvaterra de Magos',
-            'descricao': '<p>Sup</p><p>Bozo</p>'
+            'local': 'Portugal, Salvaterra de Magos',
+            'descricao': 'This is where I first learned to program and attended classes on economics and accounting. It was a professional high school course, and by excelling in my studies, I had the opportunity to secure my first job through this experience.'
         },
         { 
             'id': 'EDISTOE',
             'escola': 'Instituto Superior Tecnico',
-            'curso': 'Mestrado Engenharia Informática e Computadores',
+            'curso': 'BSc and MSc in Computer Science and Engineering',
             'campi': 'Taguspark',
+            'dataini' : 'Sep-2016',
+            'datafin' : 'Out-2023',
             'img': 'assets/img/gallery-75-11.jpg',
-            'local': 'Oeiras',
+            'local': 'Portugal, Oeiras',
             'descricao': 'yo Bozo'
         },
     ],
@@ -131,30 +150,35 @@ const dataPT = {
             'id': 'EXDHLAL',
             'empresa': 'DHL Supply Chain',
             'cargo': 'Técnico de Informática',
-            'duracao': '3 anos',
+            'dataini' : 'Sep-2011',
+            'datafin' : 'Jan-2013',
             'img': 'assets/img/gallery-75-12.jpg',
             'descricao': 'sup Bozo',
         },
         {
             'id': 'EXADECXBOX',
             'empresa': 'Adecco - Arvato',
-            'cargo': 'Call Center - Clientes alemães',
-            'duracao': '6 meses',
+            'cargo': 'Xbox Support German',
+            'dataini' : 'Nov-2014',
+            'datafin' : 'May-2015',
             'img': 'assets/img/gallery-75-13.jpg',
             'descricao': 'sup Bozo'
         },
         {
             'id': 'EXSEMLIS',
             'empresa': 'Semente',
-            'cargo': 'Full Stack Developer',
-            'duracao': '1 ano',
+            'cargo': 'Software Developer',
+            'dataini' : 'Sep-2019',
+            'datafin' : 'Sep-2020',
             'img': 'assets/img/gallery-75-14.jpg',
             'descricao': 'sup Bozo'
         },
         {
             'id': 'EXMORPHOME',
             'empresa': 'Bold - Morphis',
-            'cargo': 'Consultor de Informática',
+            'dataini' : 'Out-2020',
+            'datafin' : 'Dez-2021',
+            'cargo': 'IT Consultant',
             'img': 'assets/img/gallery-75-15.jpg',
             'descricao': 'sup Bozo'
         },
@@ -257,6 +281,11 @@ const dataPT = {
         {
             'id': 'TECDOCKER',
             'nome': 'Docker'
+
+        },
+        {
+            'id': 'TECBASH',
+            'nome': 'Linux Shell Scripting'
 
         },
         {
@@ -365,56 +394,246 @@ function buildTecnologiaList(listid) {
     return tec;
 }
 
+
+function createLi(obj){
+    let li = document.createElement('li');
+    let img = document.createElement('img');
+    li.appendChild(img);
+    li.setAttribute("class", "col-3-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn");
+    li.setAttribute("id", obj['id']);
+    img.setAttribute("src", obj['img']);
+    img.setAttribute("class", 'wide rounded margin-bottom-1');
+    img.setAttribute("alt", 'Image');
+    return li;
+
+}
+
+
+function createpopLi(obj){
+    let li = document.createElement('li');
+    let objText = document.createElement('span');
+    let img = document.createElement('img');
+    let divider = document.createElement('div');
+    divider.setAttribute("class", 'fix-12-12');
+    divider.appendChild(img)
+    li.appendChild(divider);
+    let cloneDivider = divider.cloneNode();
+    cloneDivider.appendChild(objText)
+    li.appendChild(cloneDivider);
+    
+    img.setAttribute("src", obj['img']);
+    img.setAttribute("class", 'rounded');
+    img.setAttribute("alt", 'Image');
+    
+    objText.innerHTML = obj['descricao'];
+
+    return li;
+}
+
+
+function createdRelatedEduLists(eduObj){
+    let listOfProjs = [];
+    let listOfTecs = new Set();
+
+    for(proj of dataPT['projectos']){
+        if(eduObj['id'] === proj['local']){
+            let procProj = getDataProjectoById(proj['id']);
+            listOfProjs.push(proj['titulo']);
+            for(tec of procProj['tecnologias']){
+                listOfTecs.add(tec['nome']);
+            }
+        }
+    }
+
+    return [listOfProjs, listOfTecs];
+}
+
+function createEduText(eduObj){
+    let ul = document.createElement('ul');
+    let lileft = document.createElement('li');
+    ul.setAttribute('class', 'grid equal fixedSpaces margin-top-3');
+    lileft.setAttribute('class', 'col-4-12 ae-3');
+    let liright1 = lileft.cloneNode();
+    let limid = lileft.cloneNode();
+    ul.appendChild(lileft);
+    ul.appendChild(liright1);
+    ul.appendChild(limid);
+
+    let listOfRelated  =  createdRelatedEduLists(eduObj);
+
+    lileft.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">School (Course)</h6>' + 
+    '<p class="cropBottom" style="text-align: justify;">'+ eduObj['escola'] + ' ('+ eduObj['curso'] +')</p>' +
+    '</div>'
+    lileft.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
+    '<p class="cropBottom" style="text-align: justify;">'+ eduObj['descricao'] +'</p>' +
+    '</div>'
+    limid.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Start Date</h6>' + 
+    '<p class="">'+ eduObj['dataini'] +'</p>' +
+    '</div>' + 
+    '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">End Date</h6>' + 
+    '<p class="">'+ eduObj['datafin'] +'</p>' +
+    '</div>' + 
+    '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Location</h6>' + 
+    '<p class="">'+ eduObj['local'] +'</p>' +
+    '</div>' 
+    liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Projects</h6>'
+    for(proj of listOfRelated[0]){
+        liright1.innerHTML += '<p class="">'+ proj +'</p>'
+    }
+    liright1.innerHTML += '</div>'
+    liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Tecnologies</h6>'
+    for(tec of listOfRelated[1]){
+        liright1.innerHTML += '<span class="">'+ tec +', </span>'
+    }
+    liright1.innerHTML += '</div>'
+
+    return ul;
+
+
+}
+
+
+function createEdupopLi(eduObj){
+
+
+    let li = document.createElement('li');
+    let img = document.createElement('img');
+    let divider = document.createElement('div');
+    divider.setAttribute("class", 'fix-12-12');
+    divider.appendChild(img)
+    li.appendChild(divider);
+    let cloneDivider = divider.cloneNode();
+    // <ul class="grid grid-74 later equal margin-top-5"></ul>
+    cloneDivider.appendChild(createEduText(eduObj));
+    li.appendChild(cloneDivider);
+
+    img.setAttribute("src", eduObj['img']);
+    img.setAttribute("class", 'rounded');
+    img.setAttribute("alt", 'Image');
+
+    return li;
+}
+
+
+function createdRelatedCarLists(carObj){
+    let listOfProjs = [];
+    let listOfTecs = new Set();
+
+    for(proj of dataPT['projectos']){
+        if(carObj['id'] === proj['local']){
+            let procProj = getDataProjectoById(proj['id']);
+            listOfProjs.push(proj['titulo']);
+            for(tec of procProj['tecnologias']){
+                listOfTecs.add(tec['nome']);
+            }
+        }
+    }
+
+    return [listOfProjs, listOfTecs];
+}
+
+function createCarText(carObj){
+    let ul = document.createElement('ul');
+    let lileft = document.createElement('li');
+    ul.setAttribute('class', 'grid equal fixedSpaces margin-top-3');
+    lileft.setAttribute('class', 'col-4-12 ae-3');
+    let liright1 = lileft.cloneNode();
+    let limid = lileft.cloneNode();
+    ul.appendChild(lileft);
+    ul.appendChild(liright1);
+    ul.appendChild(limid);
+
+    let listOfRelated  =  createdRelatedCarLists(carObj);
+
+    lileft.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Company (Position)</h6>' + 
+    '<p class="cropBottom" style="text-align: justify;">'+ carObj['empresa'] + ' ('+ carObj['cargo'] +')</p>' +
+    '</div>'
+    lileft.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
+    '<p class="cropBottom" style="text-align: justify;">'+ carObj['descricao'] +'</p>' +
+    '</div>'
+    limid.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Start Date</h6>' + 
+    '<p class="">'+ carObj['dataini'] +'</p>' +
+    '</div>' + 
+    '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">End Date</h6>' + 
+    '<p class="">'+ carObj['datafin'] +'</p>' +
+    '</div>' + 
+    '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Location</h6>' + 
+    '<p class="">'+ carObj['local'] +'</p>' +
+    '</div>' 
+    liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Projects</h6>'
+    for(proj of listOfRelated[0]){
+        liright1.innerHTML += '<p class="">'+ proj +'</p>'
+    }
+    liright1.innerHTML += '</div>'
+    liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Tecnologies</h6>'
+    for(tec of listOfRelated[1]){
+        liright1.innerHTML += '<span class="">'+ tec +', </span>'
+    }
+    liright1.innerHTML += '</div>'
+
+    return ul;
+
+
+}
+
+
+function createCarpopLi(carObj){
+
+
+    let li = document.createElement('li');
+    let img = document.createElement('img');
+    let divider = document.createElement('div');
+    divider.setAttribute("class", 'fix-12-12');
+    divider.appendChild(img)
+    li.appendChild(divider);
+    let cloneDivider = divider.cloneNode();
+    // <ul class="grid grid-74 later equal margin-top-5"></ul>
+    cloneDivider.appendChild(createCarText(carObj));
+    li.appendChild(cloneDivider);
+
+    img.setAttribute("src", carObj['img']);
+    img.setAttribute("class", 'rounded');
+    img.setAttribute("alt", 'Image');
+
+    return li;
+}
+
+
+
+
+
 function setupSlide2(){
-    function createLi(obj){
-        let li = document.createElement('li');
-        let img = document.createElement('img');
-        li.appendChild(img);
-        li.setAttribute("class", "col-3-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn");
-        img.setAttribute("src", obj['img']);
-        img.setAttribute("class", 'wide rounded margin-bottom-1');
-        img.setAttribute("alt", 'Image');
-        return li;
-
-    }
-    function createpopLi(obj){
-        let li = document.createElement('li');
-        let objText = document.createElement('span');
-        let img = document.createElement('img');
-        let divider = document.createElement('div');
-        divider.setAttribute("class", 'fix-12-12');
-        divider.appendChild(img)
-        li.appendChild(divider);
-        let cloneDivider = divider.cloneNode();
-        cloneDivider.appendChild(objText)
-        li.appendChild(cloneDivider);
-        
-        img.setAttribute("src", obj['img']);
-        img.setAttribute("class", 'rounded');
-        img.setAttribute("alt", 'Image');
-        
-        objText.innerHTML = obj['descricao'];
-
-        return li;
-    }
-
     let ul =  document.getElementById('slider2UL');
     let ulpop = document.getElementById('slider2popUL');
     let ulCar =  document.getElementById('slider2ULCar');
     let ulpopCar = document.getElementById('slider2popULCar');
+    let ulProj =  document.getElementById('slider2ULProj');
+    let ulpopProj = document.getElementById('slider2popULProj');
     let edu = dataPT['educacao'];
     let career = dataPT['experiencia'];
+    let projs = dataPT['projectos'];
 
     for(step of edu){
         ul.appendChild(createLi(step));
-        ulpop.appendChild(createpopLi(step));
+        ulpop.appendChild(createEdupopLi(step));
     }
 
     for(step of career){
         ulCar.appendChild(createLi(step));
-        ulpopCar.appendChild(createpopLi(step));
+        ulpopCar.appendChild(createCarpopLi(step));
+    }
+
+    for(step of projs){
+        let proj = getDataProjectoById(step['id']);
+        ulProj.appendChild(createLi(step));
+        // ulpopProj.appendChild(createProjpopLi(step));
     }
 }
+
+
+
+
+
 
 //main
 $(document).ready(() => {
