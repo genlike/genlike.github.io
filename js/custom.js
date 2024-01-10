@@ -409,6 +409,16 @@ function createLi(obj){
 }
 
 
+function createTecLi(obj){
+    let li = document.createElement('li');
+    li.setAttribute("class", "col-2-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn");
+    li.setAttribute("id", obj['id']);
+    li.innerHTML = '<h3>' + obj['nome'] + '</h3>';
+    return li;
+
+}
+
+
 function createpopLi(obj){
     let li = document.createElement('li');
     let objText = document.createElement('span');
@@ -608,10 +618,10 @@ function setupSlide2(){
     let ulCar =  document.getElementById('slider2ULCar');
     let ulpopCar = document.getElementById('slider2popULCar');
     let ulProj =  document.getElementById('slider2ULProj');
-    let ulpopProj = document.getElementById('slider2popULProj');
+    // let ulpopProj = document.getElementById('slider2popULProj');
     let edu = dataPT['educacao'];
     let career = dataPT['experiencia'];
-    let projs = dataPT['projectos'];
+    let tecs = dataPT['tecnologias'];
 
     for(step of edu){
         ul.appendChild(createLi(step));
@@ -623,9 +633,8 @@ function setupSlide2(){
         ulpopCar.appendChild(createCarpopLi(step));
     }
 
-    for(step of projs){
-        let proj = getDataProjectoById(step['id']);
-        ulProj.appendChild(createLi(step));
+    for(step of tecs){
+        ulProj.appendChild(createTecLi(step));
         // ulpopProj.appendChild(createProjpopLi(step));
     }
 }
