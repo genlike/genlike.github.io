@@ -153,6 +153,7 @@ const dataPT = {
             'dataini' : 'Sep-2011',
             'datafin' : 'Jan-2013',
             'img': 'assets/img/gallery-75-12.jpg',
+            'local': 'Portugal, Alverca do Ribatejo',
             'descricao': 'This was my first job after highschool, I had the responsability of giving support to internal clients and develop features. I would mostly handle second level support tickets, develop reports for the internal clients and try to automitize various processes.',
         },
         {
@@ -162,6 +163,7 @@ const dataPT = {
             'dataini' : 'Nov-2014',
             'datafin' : 'May-2015',
             'img': 'assets/img/gallery-75-13.jpg',
+            'local': 'Portugal, Lisboa',
             'descricao': 'I provided Xbox support to customers residing in Germany, Austria, and Switzerland. Customers would reach out via phone, and I would engage with them directly. By the end of my contract, I received the highest amount of feedback among the employees (and it was mostly positive also!). I attribute this success to going the extra mile with customers, offering assistance with advanced issues such as port forwarding and other intricacies that my peers may not have been as familiar with.'
         },
         {
@@ -171,6 +173,7 @@ const dataPT = {
             'dataini' : 'Sep-2019',
             'datafin' : 'Sep-2020',
             'img': 'assets/img/gallery-75-14.jpg',
+            'local': 'Portugal, Lisboa',
             'descricao': 'During university, out of necessity I joined at a small company with fewer than 10 employees. I managed and executed solo projects across various topics, and you can find detailed information about each project on the next page. But in brief, it was here that I learned a lot of IoT and about .NETCore using C#.'
         },
         {
@@ -180,6 +183,7 @@ const dataPT = {
             'datafin' : 'Dez-2021',
             'cargo': 'IT Consultant',
             'img': 'assets/img/gallery-75-15.jpg',
+            'local': 'Portugal, Remote Work',
             'descricao': 'This marks my second job, undertaken while still in university, and it also represents my initial experience with remote work. At Morphis, the company had an application that transformed legacy code from Oracle PL/SQL into C# code. However, the generated C# code was not always flawless, making it our team\'s responsibility to rectify these incomplete segments and develop the corresponding frontend to align with the original code.'
         },
     ],
@@ -554,7 +558,7 @@ function createEduText(eduObj){
     '</div>' 
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Projects</h6>'
     for(const proj of listOfRelated[0]){
-        liright1.innerHTML += '<p class="">'+ proj +'</p>'
+        liright1.innerHTML += '<p class="tiny">'+ proj +'</p>'
     }
     liright1.innerHTML += '</div>'
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Tecnologies</h6>'
