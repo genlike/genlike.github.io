@@ -1,0 +1,7 @@
+.whiteBgRounded {
+    background-color: white;
+    border-radius: 10px; /* You can adjust the value to change the roundness of the corners */
+    padding: 2px; /* Add padding as needed */
+    margin: 2px;
+    color: black; /* Set the text color to black */
+}

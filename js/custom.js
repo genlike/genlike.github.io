@@ -5,7 +5,7 @@ const dataPT = {
             'local': 'EDUEPSM',
             'titulo': 'PAP',
             'areas': ['ARBACK', 'ARFRONT', 'ARDB', 'ARDESK'],
-            'tecnologias': ['TECVB','TECMSSQL', 'TECPHP'],
+            'tecnologias': ['TECVB','TECMYSQL', 'TECPHP'],
             'descricao': 'Fiz a PAP',
         },
         {
@@ -220,135 +220,169 @@ const dataPT = {
     'tecnologias': [
         {
             'id': 'TECPYTH',
-            'nome': 'Python'
+            'nome': 'Python',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECASSEMB',
-            'nome': 'Assembly Pepe-16'
+            'nome': 'Assembly Pepe-16',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECGIT',
-            'nome': 'Git'
+            'nome': 'Git',
+            'tipo': 'System'
+
+        },
+        {
+            'id': 'TECMYSQL',
+            'nome': 'MySQL',
+            'tipo': 'Database'
 
         },
         {
             'id': 'TECC',
-            'nome': 'C'
+            'nome': 'C',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECJAVA',
-            'nome': 'Java'
+            'nome': 'Java',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECCSHARP',
-            'nome': 'C#'
+            'nome': 'C#',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECVB',
-            'nome': 'VB.NET'
+            'nome': 'VB.NET',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECJSCRIPT',
-            'nome': 'Javascript'
+            'nome': 'Javascript',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECTSCRIPT',
-            'nome': 'Typescript'
+            'nome': 'Typescript',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECNODE',
-            'nome': 'Node.JS'
+            'nome': 'Node.JS',
+            'tipo': 'System'
 
         },
         {
             'id': 'TECNETCORE',
-            'nome': '.NET Core'
+            'nome': '.NET Core',
+            'tipo': 'System'
 
         },
         {
             'id': 'TECDJANGO',
-            'nome': 'Django'
+            'nome': 'Django',
+            'tipo': 'Framework'
 
         },
         {
             'id': 'TECDOCKER',
-            'nome': 'Docker'
+            'nome': 'Docker',
+            'tipo': 'System'
 
         },
         {
             'id': 'TECBASH',
-            'nome': 'Linux Shell Scripting'
+            'nome': 'Linux Shell Scripting',
+            'tipo': 'Language'
 
         },
         {
             'id': 'TECAWS',
-            'nome': 'AWS'
+            'nome': 'AWS',
+            'tipo': 'Cloud'
 
         },
         {
             'id': 'TECGCLOUD',
-            'nome': 'Google Cloud'
+            'nome': 'Google Cloud',
+            'tipo': 'Cloud'
 
         },
         {
             'id': 'TECRASP',
-            'nome': 'Raspberry Pi'
+            'nome': 'Raspberry Pi',
+            'tipo': 'System'
 
         },
         {
             'id': 'TECESP86',
-            'nome': 'ESP86'
+            'nome': 'ESP86',
+            'tipo': 'System'
 
         },
         {
             'id': 'TECANDR',
-            'nome': 'Android'
+            'nome': 'Android',
+            'tipo': 'Framework'
 
         },
         {
             'id': 'TECMSSQL',
-            'nome': 'MSSQL'
+            'nome': 'MSSQL',
+            'tipo': 'Database'
 
         },
         {
             'id': 'TECORAC',
-            'nome': 'PL/SQL Oracle'
+            'nome': 'PL/SQL Oracle',
+            'tipo': 'Database'
         },
         {
             'id': 'TECPHP',
-            'nome': 'PHP'
+            'nome': 'PHP',
+            'tipo': 'Language'
         },
         {
             'id': 'TECVB6',
-            'nome': 'VB6'
+            'nome': 'VB6',
+            'tipo': 'Language'
         },
         {
             'id': 'TECDBINF',
-            'nome': 'Informix Database'
+            'nome': 'Informix Database',
+            'tipo': 'Database'
         },
         {
             'id': 'TECXML',
-            'nome': 'XML'
+            'nome': 'XML',
+            'tipo': 'Language'
         },
         {
             'id': 'TECJIR',
-            'nome': 'Jira'
+            'nome': 'Jira',
+            'tipo': 'System'
         },
         {
             'id': 'TECHTCSS',
-            'nome': 'HTML/CSS'
+            'nome': 'HTML/CSS',
+            'tipo': 'Language'
         },
         {
             'id': 'TECARM',
-            'nome': 'ARM System'
+            'nome': 'ARM Systems',
+            'tipo': 'System'
         },
     ],
 };
@@ -380,7 +414,7 @@ function getDataProjectoById(id){
 
 function buildAreaList(listid) {
     let areas = [];
-    for(id of listid) {
+    for(const id of listid) {
         areas.push(getDataAreaById(id));
     }
     return areas;
@@ -388,7 +422,7 @@ function buildAreaList(listid) {
 
 function buildTecnologiaList(listid) {
     let tec = [];
-    for(id of listid) {
+    for(const id of listid) {
         tec.push(getDataTecnologiaById(id));
     }
     return tec;
@@ -413,10 +447,21 @@ function createTecLi(obj){
     let li = document.createElement('li');
     li.setAttribute("class", "col-2-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn");
     li.setAttribute("id", obj['id']);
-    li.innerHTML = '<h3>' + obj['nome'] + '</h3>';
+    li.innerHTML = '<div class="whiteBgRounded"><h3>' + obj['nome'] + '</h3></div>';
     return li;
 
 }
+
+
+function createProjLi(obj){
+    let li = document.createElement('li');
+    li.setAttribute("class", "col-3-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn");
+    li.setAttribute("id", obj['id']);
+    li.innerHTML = '<div class="whiteBgRounded"><h3>' + obj['titulo'] + '</h3></div>';
+    return li;
+
+}
+
 
 
 function createpopLi(obj){
@@ -445,7 +490,7 @@ function createdRelatedEduLists(eduObj){
     let listOfProjs = [];
     let listOfTecs = new Set();
 
-    for(proj of dataPT['projectos']){
+    for(const proj of dataPT['projectos']){
         if(eduObj['id'] === proj['local']){
             let procProj = getDataProjectoById(proj['id']);
             listOfProjs.push(proj['titulo']);
@@ -487,12 +532,12 @@ function createEduText(eduObj){
     '<p class="">'+ eduObj['local'] +'</p>' +
     '</div>' 
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Projects</h6>'
-    for(proj of listOfRelated[0]){
+    for(const proj of listOfRelated[0]){
         liright1.innerHTML += '<p class="">'+ proj +'</p>'
     }
     liright1.innerHTML += '</div>'
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Tecnologies</h6>'
-    for(tec of listOfRelated[1]){
+    for(const tec of listOfRelated[1]){
         liright1.innerHTML += '<span class="">'+ tec +', </span>'
     }
     liright1.innerHTML += '</div>'
@@ -529,7 +574,7 @@ function createdRelatedCarLists(carObj){
     let listOfProjs = [];
     let listOfTecs = new Set();
 
-    for(proj of dataPT['projectos']){
+    for(const proj of dataPT['projectos']){
         if(carObj['id'] === proj['local']){
             let procProj = getDataProjectoById(proj['id']);
             listOfProjs.push(proj['titulo']);
@@ -571,12 +616,12 @@ function createCarText(carObj){
     '<p class="">'+ carObj['local'] +'</p>' +
     '</div>' 
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Projects</h6>'
-    for(proj of listOfRelated[0]){
+    for(const proj of listOfRelated[0]){
         liright1.innerHTML += '<p class="">'+ proj +'</p>'
     }
     liright1.innerHTML += '</div>'
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related Tecnologies</h6>'
-    for(tec of listOfRelated[1]){
+    for(const tec of listOfRelated[1]){
         liright1.innerHTML += '<span class="">'+ tec +', </span>'
     }
     liright1.innerHTML += '</div>'
@@ -609,6 +654,64 @@ function createCarpopLi(carObj){
 }
 
 
+function createProjText(projObj){
+    let ul = document.createElement('ul');
+    let lileft = document.createElement('li');
+    ul.setAttribute('class', 'grid equal fixedSpaces margin-top-3');
+    lileft.setAttribute('class', 'col-4-12 ae-3');
+    let liright1 = lileft.cloneNode();
+    let limid = lileft.cloneNode();
+    ul.appendChild(lileft);
+    ul.appendChild(limid);
+    ul.appendChild(liright1);
+    let local = projObj['local']['escola'] ?? projObj['local']['empresa'];
+
+    lileft.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
+    '<p class="cropBottom" style="text-align: justify;">'+ projObj['titulo'] + '</p>' +
+    '</div>'
+    lileft.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related To</h6>' + 
+    '<p class="cropBottom" style="text-align: justify;">'+  local +'</p>' +
+    '</div>'
+    limid.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
+    '<p class="">'+ projObj['descricao'] +'</p>' +
+    '</div>' 
+    liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Areas</h6>'
+    for(const area of projObj['areas']){
+        liright1.innerHTML += '<p class="">'+ area['nome'] +'</p>'
+    }
+    liright1.innerHTML += '</div>'
+    liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Tecnologies</h6>'
+    for(const tec of projObj['tecnologias']){
+        liright1.innerHTML += '<span class="">'+ tec['nome'] +', </span>'
+    }
+    liright1.innerHTML += '</div>'
+
+    return ul;
+
+
+}
+
+
+function createProjpopLi(projObj){
+
+
+    let li = document.createElement('li');
+    // let img = document.createElement('img');
+    let divider = document.createElement('div');
+    divider.setAttribute("class", 'fix-12-12');
+    divider.appendChild(createProjText(projObj))
+    li.appendChild(divider);
+    let cloneDivider = divider.cloneNode();
+    // <ul class="grid grid-74 later equal margin-top-5"></ul>
+
+    // img.setAttribute("src", projObj['img']);
+    // img.setAttribute("class", 'rounded');
+    // img.setAttribute("alt", 'Image');
+
+    return li;
+}
+
+
 
 
 
@@ -618,24 +721,54 @@ function setupSlide2(){
     let ulCar =  document.getElementById('slider2ULCar');
     let ulpopCar = document.getElementById('slider2popULCar');
     let ulProj =  document.getElementById('slider2ULProj');
-    // let ulpopProj = document.getElementById('slider2popULProj');
+    let ulpopProj = document.getElementById('slider2popULProj');
+    let ulTecs =  document.getElementById('slider2ULTecs');
     let edu = dataPT['educacao'];
     let career = dataPT['experiencia'];
     let tecs = dataPT['tecnologias'];
-
-    for(step of edu){
+    let projs = dataPT['projectos'];
+    let tecType = {};
+    for(const step of edu){
         ul.appendChild(createLi(step));
         ulpop.appendChild(createEdupopLi(step));
     }
 
-    for(step of career){
+    for(const step of career){
         ulCar.appendChild(createLi(step));
         ulpopCar.appendChild(createCarpopLi(step));
     }
 
-    for(step of tecs){
-        ulProj.appendChild(createTecLi(step));
-        // ulpopProj.appendChild(createProjpopLi(step));
+    for(const step of projs){
+        let proj = getDataProjectoById(step['id']);
+        ulProj.appendChild(createProjLi(proj));
+        ulpopProj.appendChild(createProjpopLi(proj));
+    }
+
+    
+    for(const step of tecs){
+        if (tecType.hasOwnProperty(step['tipo'])){
+            tecType[step['tipo']].push(step);
+        } else {
+            tecType[step['tipo']] = [step];
+        }
+        
+    }
+    for(const key of  Object.keys(tecType)){
+        let li = document.createElement('li');
+        let tul = document.createElement('ul');
+        let titleD = document.createElement('h3');
+        tul.setAttribute('class', '');
+        
+        titleD.setAttribute('class', 'opacity-6');
+        titleD.innerHTML = key;
+
+        li.appendChild(titleD);
+        li.appendChild(tul);
+        li.setAttribute('class', 'col-4-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn')
+        for(let tec of tecType[key]){
+            tul.appendChild(createTecLi(tec));
+        }
+        ulTecs.appendChild(li);
     }
 }
 
