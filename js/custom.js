@@ -525,9 +525,12 @@ function createEduText(eduObj){
     let ul = document.createElement('ul');
     let lileft = document.createElement('li');
     ul.setAttribute('class', 'grid equal fixedSpaces margin-top-3');
-    lileft.setAttribute('class', 'col-4-12 ae-3');
+    lileft.setAttribute('class', 'col-8-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
+
     let liright1 = lileft.cloneNode();
     let limid = lileft.cloneNode();
+    liright1.setAttribute('class', 'col-2-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
+    limid.setAttribute('class', 'col-2-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
     ul.appendChild(lileft);
     ul.appendChild(liright1);
     ul.appendChild(limid);
@@ -609,9 +612,11 @@ function createCarText(carObj){
     let ul = document.createElement('ul');
     let lileft = document.createElement('li');
     ul.setAttribute('class', 'grid equal fixedSpaces margin-top-3');
-    lileft.setAttribute('class', 'col-4-12 ae-3');
+    lileft.setAttribute('class', 'col-8-12 ae-3 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
     let liright1 = lileft.cloneNode();
     let limid = lileft.cloneNode();
+    liright1.setAttribute('class', 'col-2-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
+    limid.setAttribute('class', 'col-2-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
     ul.appendChild(lileft);
     ul.appendChild(liright1);
     ul.appendChild(limid);
@@ -676,21 +681,23 @@ function createProjText(projObj){
     let ul = document.createElement('ul');
     let lileft = document.createElement('li');
     ul.setAttribute('class', 'grid equal fixedSpaces margin-top-3');
-    lileft.setAttribute('class', 'col-4-12 ae-3');
+    lileft.setAttribute('class', 'col-8-12 ae-3');
     let liright1 = lileft.cloneNode();
     let limid = lileft.cloneNode();
+    liright1.setAttribute('class', 'col-2-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
+    limid.setAttribute('class', 'col-2-12 ae-3 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn');
     ul.appendChild(lileft);
     ul.appendChild(limid);
     ul.appendChild(liright1);
     let local = projObj['local']['escola'] ?? projObj['local']['empresa'];
 
-    lileft.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
+    limid.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
     '<p class="cropBottom" >'+ projObj['titulo'] + '</p>' +
     '</div>'
-    lileft.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related To</h6>' + 
+    limid.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related To</h6>' + 
     '<p class="cropBottom" >'+  local +'</p>' +
     '</div>'
-    limid.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
+    lileft.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
     '<p class="" style="text-align: justify;">'+ projObj['descricao'] +'</p>' +
     '</div>' 
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Areas</h6>'
@@ -778,7 +785,7 @@ function setupSlide2(){
 
         li.appendChild(titleD);
         li.appendChild(tul);
-        li.setAttribute('class', 'col-4-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn')
+        li.setAttribute('class', 'col-3-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn')
         for(let tec of tecType[key]){
             tul.appendChild(createTecLi(tec));
         }
