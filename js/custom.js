@@ -13,7 +13,7 @@ const dataPT = {
             'local': 'EXDHLAL',
             'titulo': 'TMS Interfaces',
             'areas': ['ARDESK', 'ARDB'],
-            'tecnologias': ['TECVB', 'TECXML', 'TECDBINF'],
+            'tecnologias': ['TECVB', 'TECDBINF'],
             'descricao': 'TMS interfaces was an app that built the bridge between the Transport Management System (TMS) and the Warehouse Management System (WMS).<br> The TMS system would drop XML files in a specific folder, the TMS interface would parse the file and perform a database action according to the XML file. The reverse would also happen, query the WMS system and create an file for the TMS system.',
         },
         {
@@ -385,11 +385,6 @@ const dataPT = {
             'id': 'TECDBINF',
             'nome': 'Informix Database',
             'tipo': 'Database'
-        },
-        {
-            'id': 'TECXML',
-            'nome': 'XML',
-            'tipo': 'Language'
         },
         {
             'id': 'TECJIR',
