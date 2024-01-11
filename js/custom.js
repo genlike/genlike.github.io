@@ -6,7 +6,7 @@ const dataPT = {
             'titulo': 'PAP',
             'areas': ['ARBACK', 'ARFRONT', 'ARDB', 'ARDESK'],
             'tecnologias': ['TECVB','TECMYSQL', 'TECPHP'],
-            'descricao': 'Fiz a PAP',
+            'descricao': 'This was the end course project. In this project I built a company schedulling software, where users could set alarm for events and invite other users to participate in these events. Users that had the application open would receive notification for these events.<br> This system composed by a VB.net application, a MySQL database instance and a php website that had the same features as the application.',
         },
         {
             'id': 'PROJTMS',
@@ -14,7 +14,7 @@ const dataPT = {
             'titulo': 'TMS Interfaces',
             'areas': ['ARDESK', 'ARDB'],
             'tecnologias': ['TECVB', 'TECXML', 'TECDBINF'],
-            'descricao': 'Fiz desenvolvimentos no TMS Interfaces',
+            'descricao': 'TMS interfaces was an app that built the bridge between the Transport Management System (TMS) and the Warehouse Management System (WMS).<br> The TMS system would drop XML files in a specific folder, the TMS interface would parse the file and perform a database action according to the XML file. The reverse would also happen, query the WMS system and create an file for the TMS system.',
         },
         {
             'id': 'PROJINFOLG',
@@ -22,7 +22,7 @@ const dataPT = {
             'titulo': 'Infolog Extender',
             'areas': ['ARDESK', 'ARDB'],
             'tecnologias': ['TECVB6','TECDBINF'],
-            'descricao': 'Fiz desenvolvimentos no Infolog Extender',
+            'descricao': 'Infolog is a Warehouse Management System (WMS). Infolog Extender is an application built in VB6 with that gave users had custom reports and actions to the infolog system. I had the responsability to give support to this application and develop some features.',
         },
         {
             'id': 'PROJREDPRAIRIE',
@@ -30,7 +30,7 @@ const dataPT = {
             'titulo': 'RedPrairie',
             'areas': ['ARDB'],
             'tecnologias': ['TECORAC'],
-            'descricao': 'Fiz reports no RedPrairie',
+            'descricao': 'RedPrairie is a Warehouse Managemenet system (WMS). I had the responsability of building reports that existed in the previous WMS for this new one.',
         },
         {
             'id': 'PROJPHC',
@@ -38,7 +38,7 @@ const dataPT = {
             'titulo': 'PHC',
             'areas': ['ARDB'],
             'tecnologias': ['TECMSSQL'],
-            'descricao': 'Fiz reports no PHC',
+            'descricao': 'PHC is a Accounting application. I had the responsability of supporting the existing reports and built new ones if internal clients needed so.',
         },
         {
             'id': 'PROJXBOX',
@@ -46,15 +46,15 @@ const dataPT = {
             'titulo': 'German Callcenter',
             'areas': [],
             'tecnologias': [],
-            'descricao': 'Yo je parle german',
+            'descricao': 'I provided first-level XBox support to customers in Germany, Austria, and Switzerland. For example in this role, I tackled account-related issues, assisted with malfunctioning consoles, and guided users through the process of port forwarding on their routers. All of these tasks were conducted through phone calls in German.',
         },
         {
             'id': 'PROJWS',
             'local': 'EDISTOE',
-            'titulo': 'Workshop Python/Assembly',
+            'titulo': 'Workshop Python / Assembly',
             'areas': [],
             'tecnologias': ['TECPYTH', 'TECASSEMB'],
-            'descricao': 'Formação de alunos nas linguagens de Python e Assembly',
+            'descricao': 'Having entered university with prior professional IT experience, I took the initiative to support my peers by organizing workshops on Python and Assembly language. With an average attendance of 10-15 participants, I received predominantly positive feedback from the participants.',
         },
         {
             'id': 'PROJBANCS',
@@ -62,7 +62,7 @@ const dataPT = {
             'titulo': 'Banco de Saude',
             'areas': ['ARBACK', 'ARFRONT', 'ARAG'],
             'tecnologias': ['TECPYTH', 'TECDJANGO', 'TECJIR', 'TECGCLOUD', 'TECGIT'],
-            'descricao': 'Yo Startup failed but tried',
+            'descricao': 'Banco de Saude was a startup that had the goal to bring medicine to people in need. My responsabilities here was to configure a Jira instance to help track issues, help with setting up the google cloud instance and help with the development of the application itself, that was built on top of the Django framework.',
         },
         {
             'id': 'PROJNEIIST',
@@ -70,15 +70,15 @@ const dataPT = {
             'titulo': 'NEIIST',
             'areas': [],
             'tecnologias': [],
-            'descricao': 'Fui Vice Presi, im salty',
+            'descricao': 'I actively participated in the student group for my course, contributing to the organization of diverse events such as esports tournaments, course dinners, and workshops for my fellow peers. My highest position was vice-president before leaving.',
         },
         {
             'id': 'PROJTESE',
             'local': 'EDISTOE',
             'titulo': 'Tese Mestrado',
             'areas': ['ARBACK', 'ARFRONT', 'ARCONT', 'ARDB'],
-            'tecnologias': ['TECTSCRIPT', 'TECJSCRIPT','TECDOCKER' ,'TECGIT', 'TECBASH'],
-            'descricao': 'Yo Startup failed but tried',
+            'tecnologias': ['TECTSCRIPT', 'TECJSCRIPT','TECDOCKER' ,'TECGIT', 'TECBASH', 'TECTHEIA', 'TECLANGI', 'TECHERO'],
+            'descricao': 'My masters thesis was the development of an online IDE for the ITLingo project. ITLingo is a research initiative that proposes specification languages for the information technology domain. This online IDE was built with help of the Theia and Langium framework and was then hosted in the Heroku platform',
         },
         {
             'id': 'PROJWCREP',
@@ -86,7 +86,7 @@ const dataPT = {
             'titulo': 'WC Reporter',
             'areas': ['ARBACK', 'ARFRONT'],
             'tecnologias': ['TECCSHARP', 'TECNETCORE','TECANDR', 'TECHTCSS', 'TECGIT'],
-            'descricao': 'Build WC Reporter',
+            'descricao': 'WC Reporter is a system designed for a shopping mall, overseeing the sanitation process of the restrooms. It incorporates intelligent indicator lights, providing customers with real-time information on restroom availability or suggesting alternative facilities, along with directional guidance. A sizable tablet located in proximity to the restrooms enables staff to promptly set the status to either available or undergoing cleaning. Additionally, the security personnel have access to a dedicated screen for monitoring the systems status and the ability to send SMS notifications to prompt cleaning staff when necessary.',
         },
         {
             'id': 'PROJCSIKEA',
@@ -94,7 +94,7 @@ const dataPT = {
             'titulo': 'IKEA Smart House',
             'areas': ['ARIOT'],
             'tecnologias': ['TECRASP', 'TECPYTH'],
-            'descricao': 'Yo casa smart',
+            'descricao': 'For this project, I programmed a series of Raspberry Pis and movement sensors to trigger sound playback upon detecting the entry of IKEA customers into the "Smart House. This implementation was successfully replicated across multiple IKEA stores in Portugal.',
         },
         {
             'id': 'PROJCONTPEP',
@@ -102,7 +102,7 @@ const dataPT = {
             'titulo': 'Smart Camera',
             'areas': ['ARIOT', 'ARFRONT', 'ARBACK'],
             'tecnologias': ['TECARM', 'TECC', 'TECGIT'],
-            'descricao': 'Yo contar pessoas com uma camara que nao funciona',
+            'descricao': 'Axis has cameras with ARM system. In these, I programmed a backend server that showed the current count of people inside a certain area; this was for COVID.',
         },
         {
             'id': 'PROJFILRAPID',
@@ -110,15 +110,15 @@ const dataPT = {
             'titulo': 'Fast Line Continente',
             'areas': ['ARIOT', 'ARFRONT', 'ARBACK'],
             'tecnologias': ['TECESP86','TECNETCORE', 'TECC', 'TECGIT'],
-            'descricao': 'Yo reiventei a fila unica do continet, cause swag&rizz',
+            'descricao': 'Continente is a Portuguese supermarket chain. For one store, I created my version of the fast line. This involved ESP8266 modules, each equipped with a button. Upon pressing the button, the module would send TCP packets to a server, updating a web app displayed on a large TV screen. The web app informed customers which line to join.',
         },
         {
             'id': 'PROJTRLGCS',
             'local': 'EXMORPHOME',
             'titulo': 'Legacy code transformation',
             'areas': ['ARFRONT', 'ARBACK'],
-            'tecnologias': ['TECCSHARP','TECNETCORE', 'TECORAC', 'TECGIT'],
-            'descricao': 'Transformar Oracle Forms para C#',
+            'tecnologias': ['TECCSHARP','TECNETCORE', 'TECORAC', 'TECGIT', 'TECJIR'],
+            'descricao': 'In Morphis, my primary responsibility involved selection an Jira issue, retrieving the legacy code, and retrive imcomplete C# code generated by a legacy code transformer. My task encompassed debugging the C# code, addressing any identified issues, and completing the frontend aspect of the form.',
         },
     ],
     'educacao': [
@@ -142,7 +142,7 @@ const dataPT = {
             'datafin' : 'Out-2023',
             'img': 'assets/img/gallery-75-11.jpg',
             'local': 'Portugal, Oeiras',
-            'descricao': 'yo Bozo'
+            'descricao': 'Instituto Superior Técnico is renowned as one of the most prestigious universities in Portugal. I secured a place on the Merit list based on my academic performance. Throughout the course, I gained valuable insights into subjects such as Physics, Number Theory, Calculus, Graph theory, and acquired proficiency in programming languages including Python, Java, and C. Additionally, I delved into various alghorithms, operating systems and more.'
         },
     ],
     'experiencia': [
@@ -153,7 +153,7 @@ const dataPT = {
             'dataini' : 'Sep-2011',
             'datafin' : 'Jan-2013',
             'img': 'assets/img/gallery-75-12.jpg',
-            'descricao': 'sup Bozo',
+            'descricao': 'This was my first job after highschool, I had the responsability of giving support to internal clients and develop features. I would mostly handle second level support tickets, develop reports for the internal clients and try to automitize various processes.',
         },
         {
             'id': 'EXADECXBOX',
@@ -162,7 +162,7 @@ const dataPT = {
             'dataini' : 'Nov-2014',
             'datafin' : 'May-2015',
             'img': 'assets/img/gallery-75-13.jpg',
-            'descricao': 'sup Bozo'
+            'descricao': 'I provided Xbox support to customers residing in Germany, Austria, and Switzerland. Customers would reach out via phone, and I would engage with them directly. By the end of my contract, I received the highest amount of feedback among the employees (and it was mostly positive also!). I attribute this success to going the extra mile with customers, offering assistance with advanced issues such as port forwarding and other intricacies that my peers may not have been as familiar with.'
         },
         {
             'id': 'EXSEMLIS',
@@ -171,7 +171,7 @@ const dataPT = {
             'dataini' : 'Sep-2019',
             'datafin' : 'Sep-2020',
             'img': 'assets/img/gallery-75-14.jpg',
-            'descricao': 'sup Bozo'
+            'descricao': 'During university, out of necessity I joined at a small company with fewer than 10 employees. I managed and executed solo projects across various topics, and you can find detailed information about each project on the next page. But in brief, it was here that I learned a lot of IoT and about .NETCore using C#.'
         },
         {
             'id': 'EXMORPHOME',
@@ -180,7 +180,7 @@ const dataPT = {
             'datafin' : 'Dez-2021',
             'cargo': 'IT Consultant',
             'img': 'assets/img/gallery-75-15.jpg',
-            'descricao': 'sup Bozo'
+            'descricao': 'This marks my second job, undertaken while still in university, and it also represents my initial experience with remote work. At Morphis, the company had an application that transformed legacy code from Oracle PL/SQL into C# code. However, the generated C# code was not always flawless, making it our team\'s responsibility to rectify these incomplete segments and develop the corresponding frontend to align with the original code.'
         },
     ],
     'areas': [
@@ -222,6 +222,24 @@ const dataPT = {
             'id': 'TECPYTH',
             'nome': 'Python',
             'tipo': 'Language'
+
+        },
+        {
+            'id': 'TECTHEIA',
+            'nome': 'THEIA',
+            'tipo': 'Framework'
+
+        },
+        {
+            'id': 'TECHERO',
+            'nome': 'Heroku',
+            'tipo': 'Cloud'
+
+        },
+        {
+            'id': 'TECLANGI',
+            'nome': 'Langium',
+            'tipo': 'Framework'
 
         },
         {
@@ -667,13 +685,13 @@ function createProjText(projObj){
     let local = projObj['local']['escola'] ?? projObj['local']['empresa'];
 
     lileft.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
-    '<p class="cropBottom" style="text-align: justify;">'+ projObj['titulo'] + '</p>' +
+    '<p class="cropBottom" >'+ projObj['titulo'] + '</p>' +
     '</div>'
     lileft.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Related To</h6>' + 
-    '<p class="cropBottom" style="text-align: justify;">'+  local +'</p>' +
+    '<p class="cropBottom" >'+  local +'</p>' +
     '</div>'
     limid.innerHTML = '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Description</h6>' + 
-    '<p class="">'+ projObj['descricao'] +'</p>' +
+    '<p class="" style="text-align: justify;">'+ projObj['descricao'] +'</p>' +
     '</div>' 
     liright1.innerHTML += '<div class=""><h6 class="uppercase opacity-4 margin-top-3 margin-bottom-2">Areas</h6>'
     for(const area of projObj['areas']){
@@ -710,10 +728,6 @@ function createProjpopLi(projObj){
 
     return li;
 }
-
-
-
-
 
 function setupSlide2(){
     let ul =  document.getElementById('slider2UL');
@@ -771,11 +785,6 @@ function setupSlide2(){
         ulTecs.appendChild(li);
     }
 }
-
-
-
-
-
 
 //main
 $(document).ready(() => {
