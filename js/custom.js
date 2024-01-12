@@ -85,7 +85,7 @@ const dataPT = {
             'local': 'EXSEMLIS',
             'titulo': 'WC Reporter',
             'areas': ['ARBACK', 'ARFRONT'],
-            'tecnologias': ['TECCSHARP', 'TECNETCORE','TECANDR', 'TECHTCSS', 'TECGIT'],
+            'tecnologias': ['TECCSHARP', 'TECNETCORE','TECANDR', 'TECXAMAR', 'TECHTCSS', 'TECGIT'],
             'descricao': 'WC Reporter is a system designed for a shopping mall, overseeing the sanitation process of the restrooms. It incorporates intelligent indicator lights, providing customers with real-time information on restroom availability or suggesting alternative facilities, along with directional guidance. A sizable tablet located in proximity to the restrooms enables staff to promptly set the status to either available or undergoing cleaning. Additionally, the security personnel have access to a dedicated screen for monitoring the systems status and the ability to send SMS notifications to prompt cleaning staff when necessary.',
         },
         {
@@ -357,6 +357,12 @@ const dataPT = {
         {
             'id': 'TECANDR',
             'nome': 'Android',
+            'tipo': 'System'
+
+        },
+        {
+            'id': 'TECXAMAR',
+            'nome': 'Xamarin',
             'tipo': 'Framework'
 
         },
