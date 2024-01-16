@@ -790,7 +790,7 @@ function setupSlide2(){
 
         li.appendChild(titleD);
         li.appendChild(tul);
-        li.setAttribute('class', 'col-2-12 col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn')
+        li.setAttribute('class', 'col-2-12 equalElement col-tablet-1-3 col-phablet-1-2 col-phone-1-1 ae-7 fadeIn')
         for(let tec of tecType[key]){
             tul.appendChild(createTecLi(tec));
         }
